@@ -1,6 +1,9 @@
 import React, { Component, FormEvent } from 'react';
 import { UserData } from '../types';
 import { User } from './user';
+import { Api } from './api';
+
+const lsItemName = 'userSearchQuery';
 
 interface SearchState {
   query: string;
@@ -12,6 +15,15 @@ export class Search extends Component<Record<string, never>, SearchState> {
     query: '',
     results: [],
   };
+
+  async componentDidMount() {
+    const query = localStorage.getItem(lsItemName);
+    if (query) this.setState({ query });
+    const api = Api.getInstance();
+    this.setState({
+      results: await api.getSearchResults(query || 'repos:>42+followers:>1000'),
+    });
+  }
 
   render() {
     return (
@@ -34,20 +46,8 @@ export class Search extends Component<Record<string, never>, SearchState> {
 
   async handleSubmit(e: FormEvent) {
     e.preventDefault();
-    const response = await fetch(
-      `https://api.github.com/search/users?q=${this.state.query}`
-    );
-    if (!response.ok) {
-      throw new Error("Response's status is not 200 OK");
-    }
-    const body = await response.json();
-    const results: UserData[] = body.items.map(
-      (data: { login: string; avatar_url: string; html_url: string }) => ({
-        login: data.login,
-        avatarUrl: data.avatar_url,
-        profileUrl: data.html_url,
-      })
-    );
-    this.setState({ results });
+    const api = Api.getInstance();
+    this.setState({ results: await api.getSearchResults(this.state.query) });
+    localStorage.setItem(lsItemName, this.state.query);
   }
 }

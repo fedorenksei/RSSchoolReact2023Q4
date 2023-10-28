@@ -9,9 +9,6 @@ export class ErrorBoundary extends Component<
   ErrorBoundaryState
 > {
   state: ErrorBoundaryState = { error: null };
-  constructor(props: PropsWithChildren) {
-    super(props);
-  }
 
   render() {
     return (
