@@ -5,18 +5,25 @@ export class User extends Component<UserData> {
   constructor(props: UserData) {
     super(props);
   }
+
   render() {
     return (
-      <div>
-        <img src={this.props.avatarUrl} width="100px" />
-        {this.props.login}
-        <a
-          href={this.props.profileUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          see profile
-        </a>
+      <div className="p-5 flex gap-3">
+        <img
+          src={this.props.avatarUrl}
+          className="rounded-md h-[100px] aspect-square"
+        />
+        <div className="flex flex-col">
+          <a
+            href={this.props.profileUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-blue-800 transition"
+            title="See profile"
+          >
+            {this.props.login}
+          </a>
+        </div>
       </div>
     );
   }
