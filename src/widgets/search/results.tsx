@@ -32,7 +32,13 @@ export class SearchResults extends Component<Props, State> {
     );
   }
 
-  async componentDidMount() {
+  async componentDidUpdate(prevProps: Props) {
+    if (
+      this.props.query === prevProps.query &&
+      (this.state.results.length || this.state.hasError)
+    )
+      return;
+
     try {
       const api = Api.getInstance();
       const results = await api.getSearchResults(this.props.query);
