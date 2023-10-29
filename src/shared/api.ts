@@ -20,7 +20,6 @@ export class Api {
       throw new Error("Response's status is not 200 OK");
     }
     const body = await response.json();
-    console.log(body);
     const results: UserData[] = body.data.results.map(
       (data: {
         id: string;
