@@ -18,7 +18,7 @@ export class ErrorBoundary extends Component<
           <>
             <div className="fixed z-10 top-0 left-0 w-full h-full grid place-items-center bg-slate-600 opacity-50"></div>
             <div className="fixed z-20 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-5 bg-white rounded-lg space-y-3">
-              <p>Oops! Something went wrong..</p>
+              <p>Oops! Something went wrong...</p>
               <p>
                 <b>{this.state.error.name}</b>: {this.state.error.message}
               </p>
