@@ -2,6 +2,7 @@ import React, { Component, FormEvent } from 'react';
 import { UserData } from '../types';
 import { User } from './user';
 import { Api } from './api';
+import { TestError } from './testError';
 
 const lsItemName = 'userSearchQuery';
 
@@ -35,6 +36,7 @@ export class Search extends Component<Record<string, never>, SearchState> {
           />
           <button type="submit">Search</button>
         </form>
+        <TestError />
         <div>
           {this.state.results.map((data) => (
             <User key={data.login} {...data} />
