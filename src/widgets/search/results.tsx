@@ -20,7 +20,7 @@ export class SearchResults extends Component<Props, State> {
     return (
       <div className="max-w-xl">
         {this.state.results.map((data) => (
-          <User key={data.login} {...data} />
+          <User key={data.id} {...data} />
         ))}
       </div>
     );
@@ -31,9 +31,7 @@ export class SearchResults extends Component<Props, State> {
       return;
 
     const api = Api.getInstance();
-    const results = await api.getSearchResults(
-      this.props.query || 'repos:>42+followers:>1000'
-    );
+    const results = await api.getSearchResults(this.props.query);
     this.setState({ results });
   }
 }

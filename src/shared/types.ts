@@ -1,5 +1,6 @@
 export interface UserData {
-  login: string;
-  avatarUrl: string;
-  profileUrl: string;
+  id: string;
+  name: string;
+  description: string;
+  imageUrl: string;
 }

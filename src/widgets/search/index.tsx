@@ -14,7 +14,7 @@ export class Search extends Component<Record<string, never>, State> {
   render() {
     return (
       <div className="flex flex-col items-center pt-[10vh] flex-shrink-0 gap-5">
-        <h1 className="text-3xl">Search for GitHub users</h1>
+        <h1 className="text-3xl">Search for Marvel characters</h1>
         <SearchInput handleQuery={this.handleQuery.bind(this)} />
         <SearchResults query={this.state.query} />
       </div>
