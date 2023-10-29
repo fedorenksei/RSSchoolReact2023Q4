@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { UserData } from '../shared/types';
+import { CharacterData } from '../shared/types';
 
-export class User extends Component<UserData> {
-  constructor(props: UserData) {
+export class Character extends Component<CharacterData> {
+  constructor(props: CharacterData) {
     super(props);
   }
 
@@ -14,7 +14,7 @@ export class User extends Component<UserData> {
           className="rounded-md h-[100px] aspect-square"
         />
         <div className="flex flex-col">
-          <p>{this.props.name}</p>
+          <p className="text-lg">{this.props.name}</p>
           <p>{this.props.description}</p>
         </div>
       </div>

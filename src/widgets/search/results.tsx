@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
-import { User } from '../../entities/user';
+import { Character } from '../../entities/character';
 import { Api } from '../../shared/api';
-import { UserData } from '../../shared/types';
+import { CharacterData } from '../../shared/types';
 
 interface Props {
   query: string;
 }
 
 interface State {
-  results: UserData[];
+  results: CharacterData[];
   hasError: boolean;
   isLoading: boolean;
 }
@@ -28,7 +28,9 @@ export class SearchResults extends Component<Props, State> {
     ) : (
       <div className="max-w-xl">
         {this.state.results.length ? (
-          this.state.results.map((data) => <User key={data.id} {...data} />)
+          this.state.results.map((data) => (
+            <Character key={data.id} {...data} />
+          ))
         ) : (
           <p>Have not found anything...</p>
         )}

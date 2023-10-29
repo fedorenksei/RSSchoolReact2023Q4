@@ -1,4 +1,4 @@
-import { UserData } from './types';
+import { CharacterData } from './types';
 
 const API_KEY = 'fcd41195ddfdb5c4521b26aff45b7db5';
 
@@ -20,7 +20,7 @@ export class Api {
       throw new Error("Response's status is not 200 OK");
     }
     const body = await response.json();
-    const results: UserData[] = body.data.results.map(
+    const results: CharacterData[] = body.data.results.map(
       (data: {
         id: string;
         name: string;
