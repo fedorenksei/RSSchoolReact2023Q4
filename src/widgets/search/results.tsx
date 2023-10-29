@@ -18,7 +18,7 @@ export class SearchResults extends Component<Props, State> {
 
   render() {
     return (
-      <div>
+      <div className="max-w-xl">
         {this.state.results.map((data) => (
           <User key={data.login} {...data} />
         ))}

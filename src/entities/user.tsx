@@ -1,7 +1,14 @@
 import React, { Component } from 'react';
 import { UserData } from '../shared/types';
+import { Api } from '../shared/api';
 
-export class User extends Component<UserData> {
+interface State {
+  userBio: string;
+}
+
+export class User extends Component<UserData, State> {
+  state = { userBio: '' };
+
   constructor(props: UserData) {
     super(props);
   }
@@ -23,8 +30,15 @@ export class User extends Component<UserData> {
           >
             {this.props.login}
           </a>
+          <p>{this.state.userBio}</p>
         </div>
       </div>
     );
+  }
+
+  async componentDidMount() {
+    const api = Api.getInstance();
+    const userBio = await api.getUserBio(this.props.login);
+    this.setState({ userBio });
   }
 }

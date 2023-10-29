@@ -25,4 +25,13 @@ export class Api {
     );
     return results;
   }
+
+  async getUserBio(login: string) {
+    const response = await fetch(`https://api.github.com/users/${login}`);
+    if (!response.ok) {
+      throw new Error("Response's status is not 200 OK");
+    }
+    const body = await response.json();
+    return body.bio || '';
+  }
 }
