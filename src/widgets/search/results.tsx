@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { User } from './user';
-import { Api } from '../api';
-import { UserData } from '../../types';
+import { User } from '../../entities/user';
+import { Api } from '../../shared/api';
+import { UserData } from '../../shared/types';
 
 interface Props {
   query: string;

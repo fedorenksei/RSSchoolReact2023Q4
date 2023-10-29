@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { TestError } from '../testError';
-import { SearchInput } from './input';
+import { SearchInput } from '../../entities/input';
 import { SearchResults } from './results';
 
 interface State {
@@ -16,7 +15,6 @@ export class Search extends Component<Record<string, never>, State> {
     return (
       <>
         <SearchInput handleQuery={this.handleQuery.bind(this)} />
-        <TestError />
         <SearchResults query={this.state.query} />
       </>
     );
