@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { UserData } from '../types';
+import { UserData } from '../../types';
 
 export class User extends Component<UserData> {
   constructor(props: UserData) {
