@@ -8,14 +8,14 @@ interface Props {
 }
 
 interface State {
-  results: CharacterData[];
+  results: CharacterData[] | null;
   hasError: boolean;
   isLoading: boolean;
 }
 
 export class SearchResults extends Component<Props, State> {
   state: State = {
-    results: [],
+    results: null,
     hasError: false,
     isLoading: false,
   };
@@ -23,7 +23,7 @@ export class SearchResults extends Component<Props, State> {
   render() {
     return this.state.hasError ? (
       <p>Something went wrong...</p>
-    ) : this.state.isLoading ? (
+    ) : this.state.isLoading || !this.state.results ? (
       <p>Loading...</p>
     ) : (
       <div className="max-w-xl">
@@ -41,7 +41,7 @@ export class SearchResults extends Component<Props, State> {
   async componentDidUpdate(prevProps: Props) {
     if (
       this.props.query === prevProps.query &&
-      (this.state.results.length || this.state.hasError || this.state.isLoading)
+      (this.state.results || this.state.hasError || this.state.isLoading)
     )
       return;
 
@@ -49,7 +49,7 @@ export class SearchResults extends Component<Props, State> {
     try {
       const api = Api.getInstance();
       const results = await api.getSearchResults(this.props.query);
-      this.setState({ results });
+      this.setState({ results, hasError: false });
     } catch (err) {
       this.setState({ hasError: true });
     }
