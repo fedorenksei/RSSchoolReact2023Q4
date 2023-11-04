@@ -32,6 +32,7 @@ export const SearchInput = ({ handleQuery }: Props) => {
     <form
       onSubmit={handleSubmit(onSubmit)}
       className="flex flex-wrap items-center gap-3"
+      autoComplete="off"
     >
       <input
         className="border p-2 px-4 rounded-full hover:border-violet-700"

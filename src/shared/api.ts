@@ -1,5 +1,11 @@
 import { CharacterData } from './types';
 
+interface SearchParams {
+  query: string;
+  page: number;
+  limit: number;
+}
+
 const API_KEY = 'fcd41195ddfdb5c4521b26aff45b7db5';
 
 export class Api {
@@ -10,11 +16,11 @@ export class Api {
     return this.instance;
   }
 
-  async getSearchResults(query: string) {
+  async getSearchResults({ query, limit, page }: SearchParams) {
     const response = await fetch(
       `https://gateway.marvel.com/v1/public/characters?${
         query ? `nameStartsWith=${query}` : ''
-      }&apikey=${API_KEY}`
+      }&apikey=${API_KEY}&limit=${limit}&offset=${limit * (page - 1)}`
     );
     if (!response.ok) {
       throw new Error("Response's status is not 200 OK");
@@ -33,6 +39,7 @@ export class Api {
         imageUrl: `${data.thumbnail?.path}.${data.thumbnail?.extension}`,
       })
     );
-    return results;
+    const total: number = body.data.total;
+    return { results, total };
   }
 }
