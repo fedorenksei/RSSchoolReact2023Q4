@@ -1,58 +1,42 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Character } from '../../entities/character';
 import { Api } from '../../shared/api';
 import { CharacterData } from '../../shared/types';
 
 interface Props {
-  query: string;
+  query: string | null;
 }
 
-interface State {
-  results: CharacterData[] | null;
-  hasError: boolean;
-  isLoading: boolean;
-}
+export const SearchResults = ({ query }: Props) => {
+  const [results, setResults] = useState<CharacterData[] | null>(null);
+  const [hasError, setHasError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-export class SearchResults extends Component<Props, State> {
-  state: State = {
-    results: null,
-    hasError: false,
-    isLoading: false,
-  };
+  useEffect(() => {
+    const f = async () => {
+      if (query === null) return;
+      setIsLoading(true);
+      try {
+        const api = Api.getInstance();
+        const results = await api.getSearchResults(query);
+        setResults(results);
+        setHasError(false);
+      } catch (err) {
+        setHasError(true);
+      }
+      setIsLoading(false);
+    };
+    f();
+  }, [query]);
 
-  render() {
-    return this.state.hasError ? (
-      <p>Something went wrong...</p>
-    ) : this.state.isLoading || !this.state.results ? (
-      <p>Loading...</p>
-    ) : (
-      <div className="max-w-xl">
-        {this.state.results.length ? (
-          this.state.results.map((data) => (
-            <Character key={data.id} {...data} />
-          ))
-        ) : (
-          <p>Have not found anything...</p>
-        )}
-      </div>
-    );
-  }
-
-  async componentDidUpdate(prevProps: Props) {
-    if (
-      this.props.query === prevProps.query &&
-      (this.state.results || this.state.hasError || this.state.isLoading)
-    )
-      return;
-
-    this.setState({ isLoading: true });
-    try {
-      const api = Api.getInstance();
-      const results = await api.getSearchResults(this.props.query);
-      this.setState({ results, hasError: false });
-    } catch (err) {
-      this.setState({ hasError: true });
-    }
-    this.setState({ isLoading: false });
-  }
-}
+  if (hasError) return <p>Something went wrong...</p>;
+  if (!results || isLoading) return <p>Loading...</p>;
+  if (!results.length) return <p>Have not found anything...</p>;
+  return (
+    <div className="max-w-xl">
+      {results.map((data) => (
+        <Character key={data.id} {...data} />
+      ))}
+    </div>
+  );
+};
