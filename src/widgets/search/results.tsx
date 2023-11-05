@@ -4,6 +4,7 @@ import { Api } from '../../shared/api';
 import { CharacterData } from '../../shared/types';
 import { Pagination } from '../../features/pagination';
 import { Limit } from '../../features/limit';
+import { useNavigate, useParams } from 'react-router-dom';
 
 interface ApiResponse {
   total: number;
@@ -15,7 +16,15 @@ interface Props {
 }
 
 export const SearchResults = ({ query }: Props) => {
-  const [page, setPage] = useState(1);
+  const { page: pageParam } = useParams();
+  const page = +(pageParam || '1');
+  const navigate = useNavigate();
+  const setPage = (pageSetter: SetStateAction<number>) => {
+    navigate(
+      `/pages/${typeof pageSetter === 'number' ? pageSetter : pageSetter(page)}`
+    );
+  };
+  console.log('render search results ' + page);
   const [limit, setLimit] = useState(10);
   const [response, setResponse] = useState<ApiResponse | null>(null);
   const [hasError, setHasError] = useState(false);
@@ -32,29 +41,7 @@ export const SearchResults = ({ query }: Props) => {
           page,
           limit,
         });
-        setResponse(response);
-        setPage(1);
-        setHasError(false);
-      } catch (err) {
-        setHasError(true);
-      }
-      setIsLoading(false);
-    };
-    f();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [query]);
-
-  useEffect(() => {
-    const f = async () => {
-      if (query === null) return;
-      setIsLoading(true);
-      try {
-        const api = Api.getInstance();
-        const response = await api.getSearchResults({
-          query,
-          page,
-          limit,
-        });
+        if (response.total && !response.results.length) setPage(1);
         setResponse(response);
         setHasError(false);
       } catch (err) {
@@ -64,7 +51,7 @@ export const SearchResults = ({ query }: Props) => {
     };
     f();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page, limit]);
+  }, [query, page, limit]);
 
   const setLimitResetPage = (limit: SetStateAction<number>) => {
     setLimit(limit);
