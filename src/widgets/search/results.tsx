@@ -4,7 +4,7 @@ import { Api } from '../../shared/api';
 import { ProductData } from '../../shared/types';
 import { Pagination } from '../../features/pagination';
 import { Limit } from '../../features/limit';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 
 interface ApiResponse {
   total: number;
@@ -16,13 +16,13 @@ interface Props {
 }
 
 export const SearchResults = ({ query }: Props) => {
-  const { page: pageParam } = useParams();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const pageParam = searchParams.get('page');
   const page = +(pageParam || '1');
-  const navigate = useNavigate();
   const setPage = (pageSetter: SetStateAction<number>) => {
-    navigate(
-      `/pages/${typeof pageSetter === 'number' ? pageSetter : pageSetter(page)}`
-    );
+    setSearchParams({
+      page: `${typeof pageSetter === 'number' ? pageSetter : pageSetter(page)}`,
+    });
   };
   const [limit, setLimit] = useState(10);
   const [response, setResponse] = useState<ApiResponse | null>(null);
