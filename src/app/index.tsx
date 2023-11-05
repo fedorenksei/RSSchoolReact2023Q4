@@ -1,8 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { RootRouter } from './router';
 
-export class App extends Component {
-  render() {
-    return <RootRouter />;
-  }
-}
+export const App = () => {
+  return <RootRouter />;
+};
