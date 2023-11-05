@@ -1,12 +1,10 @@
-import { CharacterData } from './types';
+import { ProductData } from './types';
 
 interface SearchParams {
   query: string;
   page: number;
   limit: number;
 }
-
-const API_KEY = 'fcd41195ddfdb5c4521b26aff45b7db5';
 
 export class Api {
   static instance: Api;
@@ -18,28 +16,28 @@ export class Api {
 
   async getSearchResults({ query, limit, page }: SearchParams) {
     const response = await fetch(
-      `https://gateway.marvel.com/v1/public/characters?${
-        query ? `nameStartsWith=${query}` : ''
-      }&apikey=${API_KEY}&limit=${limit}&offset=${limit * (page - 1)}`
+      `https://dummyjson.com/products${
+        query ? `/search?q=${query}` : '?'
+      }&limit=${limit}&skip=${limit * (page - 1)}`
     );
     if (!response.ok) {
       throw new Error("Response's status is not 200 OK");
     }
     const body = await response.json();
-    const results: CharacterData[] = body.data.results.map(
+    const results: ProductData[] = body.products.map(
       (data: {
         id: string;
-        name: string;
+        title: string;
         description: string;
-        thumbnail: { path: string; extension: string };
+        thumbnail: string;
       }) => ({
         id: data.id,
-        name: data.name,
+        name: data.title,
         description: data.description,
-        imageUrl: `${data.thumbnail?.path}.${data.thumbnail?.extension}`,
+        imageUrl: data.thumbnail,
       })
     );
-    const total: number = body.data.total;
+    const total: number = body.total;
     return { results, total };
   }
 }

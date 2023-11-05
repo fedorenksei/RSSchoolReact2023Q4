@@ -8,7 +8,7 @@ export const Search = () => {
 
   return (
     <div className="flex flex-col items-center pt-[10vh] flex-shrink-0 gap-5">
-      <h1 className="text-3xl">Search for Marvel characters</h1>
+      <h1 className="text-3xl">Search for Products of DummyJSON</h1>
       <SearchInput handleQuery={handleQuery} />
       <SearchResults query={query} />
     </div>

@@ -1,14 +1,14 @@
 import React, { SetStateAction, useEffect, useState } from 'react';
-import { Character } from '../../entities/character';
+import { Product } from '../../entities/product';
 import { Api } from '../../shared/api';
-import { CharacterData } from '../../shared/types';
+import { ProductData } from '../../shared/types';
 import { Pagination } from '../../features/pagination';
 import { Limit } from '../../features/limit';
 import { useNavigate, useParams } from 'react-router-dom';
 
 interface ApiResponse {
   total: number;
-  results: CharacterData[];
+  results: ProductData[];
 }
 
 interface Props {
@@ -24,14 +24,13 @@ export const SearchResults = ({ query }: Props) => {
       `/pages/${typeof pageSetter === 'number' ? pageSetter : pageSetter(page)}`
     );
   };
-  console.log('render search results ' + page);
   const [limit, setLimit] = useState(10);
   const [response, setResponse] = useState<ApiResponse | null>(null);
   const [hasError, setHasError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    const f = async () => {
+    (async () => {
       if (query === null) return;
       setIsLoading(true);
       try {
@@ -46,10 +45,10 @@ export const SearchResults = ({ query }: Props) => {
         setHasError(false);
       } catch (err) {
         setHasError(true);
+        console.log(err);
       }
       setIsLoading(false);
-    };
-    f();
+    })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query, page, limit]);
 
@@ -67,7 +66,7 @@ export const SearchResults = ({ query }: Props) => {
     searchResults = (
       <div>
         {results.map((data) => (
-          <Character key={data.id} {...data} />
+          <Product key={data.id} {...data} />
         ))}
       </div>
     );
