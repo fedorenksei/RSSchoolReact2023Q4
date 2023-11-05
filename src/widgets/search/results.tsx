@@ -1,10 +1,10 @@
-import React, { SetStateAction, useEffect, useState } from 'react';
+import React, { MouseEvent, SetStateAction, useEffect, useState } from 'react';
 import { Product } from '../../entities/product';
 import { Api } from '../../shared/api';
 import { ProductData } from '../../shared/types';
 import { Pagination } from '../../features/pagination';
 import { Limit } from '../../features/limit';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 interface ApiResponse {
   total: number;
@@ -28,6 +28,7 @@ export const SearchResults = ({ query }: Props) => {
   const [response, setResponse] = useState<ApiResponse | null>(null);
   const [hasError, setHasError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     (async () => {
@@ -66,7 +67,16 @@ export const SearchResults = ({ query }: Props) => {
     searchResults = (
       <div>
         {results.map((data) => (
-          <Product key={data.id} {...data} />
+          <div
+            onClick={(e: MouseEvent) => {
+              navigate(`/${data.id}${window.location.search}`);
+              e.stopPropagation();
+            }}
+            key={data.id}
+            className="cursor-pointer hover:shadow-lg hover:bg-blue-100 transition"
+          >
+            <Product view="card" data={data} />
+          </div>
         ))}
       </div>
     );

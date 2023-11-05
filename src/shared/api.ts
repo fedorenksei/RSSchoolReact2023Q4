@@ -40,4 +40,23 @@ export class Api {
     const total: number = body.total;
     return { results, total };
   }
+
+  async getProduct(id: string) {
+    const response = await fetch(`https://dummyjson.com/products/${id}`);
+    if (!response.ok) {
+      throw new Error("Response's status is not 200 OK");
+    }
+    const data: {
+      id: string;
+      title: string;
+      description: string;
+      thumbnail: string;
+    } = await response.json();
+    return {
+      id: data.id,
+      name: data.title,
+      description: data.description,
+      imageUrl: data.thumbnail,
+    };
+  }
 }

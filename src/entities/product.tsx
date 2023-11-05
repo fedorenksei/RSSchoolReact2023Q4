@@ -1,12 +1,27 @@
 import React from 'react';
 import { ProductData } from '../shared/types';
 
-export const Product = ({ imageUrl, name, description }: ProductData) => {
+interface Props {
+  data: ProductData;
+  view: 'card' | 'details';
+}
+
+export const Product = ({
+  view,
+  data: { imageUrl, name, description },
+}: Props) => {
   return (
-    <div className="p-5 flex gap-3">
+    <div
+      className={
+        view === 'card'
+          ? 'p-5 flex gap-3'
+          : 'h-full p-3 flex flex-col gap-4 items-start justify-center'
+      }
+    >
       <img
         src={imageUrl}
         className="rounded-md h-[100px] aspect-square object-cover"
+        title={name}
       />
       <div className="flex flex-col">
         <p className="text-lg">{name}</p>
