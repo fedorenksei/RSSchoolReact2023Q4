@@ -5,6 +5,7 @@ import { ProductData } from '../../shared/types';
 import { Pagination } from '../../features/pagination';
 import { Limit } from '../../features/limit';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { Loader } from '../../entities/loader';
 
 interface ApiResponse {
   total: number;
@@ -61,7 +62,7 @@ export const SearchResults = ({ query }: Props) => {
   const { results, total } = response || {};
   let searchResults;
   if (hasError) searchResults = <p>Something went wrong...</p>;
-  else if (!results || isLoading) searchResults = <p>Loading...</p>;
+  else if (!results || isLoading) searchResults = <Loader />;
   else if (!results.length) searchResults = <p>Have not found anything...</p>;
   else {
     searchResults = (

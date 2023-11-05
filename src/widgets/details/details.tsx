@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import { Api } from '../../shared/api';
 import { ProductData } from '../../shared/types';
 import { Product } from '../../entities/product';
+import { Loader } from '../../entities/loader';
 
 export const Details = () => {
   const { detailsId } = useParams();
@@ -29,7 +30,7 @@ export const Details = () => {
 
   let searchResults;
   if (hasError) searchResults = <p>Something went wrong...</p>;
-  else if (!response || isLoading) searchResults = <p>Loading...</p>;
+  else if (!response || isLoading) searchResults = <Loader />;
   else {
     searchResults = <Product view="details" data={response} />;
   }
