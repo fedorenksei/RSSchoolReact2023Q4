@@ -11,8 +11,33 @@ import { Pagination } from '../features/Pagination';
 
 export const Search = () => {
   const navigate = useNavigate();
-  const [page, setPage] = usePage();
+  const { apiRequestParams, apiRequestStatus } = useSearchManagement();
 
+  return (
+    <SearchContext.Provider value={{ apiRequestParams, apiRequestStatus }}>
+      <div
+        className="flex flex-col items-center pt-[10vh] flex-shrink-0 gap-5"
+        onClick={() => navigate(`/${window.location.search}`)}
+      >
+        <h1 className="text-3xl">Search for Products of DummyJSON</h1>
+        <SearchInput />
+        {apiRequestStatus && typeof apiRequestStatus === 'object' && (
+          <div className="flex flex-col gap-4 items-center">
+            <div className="self-stretch flex justify-between gap-5 flex-wrap items-center">
+              <p>Total: {apiRequestStatus.total}</p>
+              <Limit />
+            </div>
+            <Pagination />
+          </div>
+        )}
+        <SearchResults />
+      </div>
+    </SearchContext.Provider>
+  );
+};
+
+function useSearchManagement() {
+  const [page, setPage] = usePage();
   const [searchTerm, setSearchTerm] = useSearchTerm();
   const [apiRequestStatus, setApiRequestStatus] =
     useState<ApiRequestStatus>(null);
@@ -37,35 +62,8 @@ export const Search = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchTerm, page, limit]);
 
-  return (
-    <SearchContext.Provider
-      value={{
-        apiRequestParams: {
-          searchTerm,
-          setSearchTerm,
-          limit,
-          setLimit,
-        },
-        apiRequestStatus,
-      }}
-    >
-      <div
-        className="flex flex-col items-center pt-[10vh] flex-shrink-0 gap-5"
-        onClick={() => navigate(`/${window.location.search}`)}
-      >
-        <h1 className="text-3xl">Search for Products of DummyJSON</h1>
-        <SearchInput />
-        {apiRequestStatus && typeof apiRequestStatus === 'object' && (
-          <div className="flex flex-col gap-4 items-center">
-            <div className="self-stretch flex justify-between gap-5 flex-wrap items-center">
-              <p>Total: {apiRequestStatus.total}</p>
-              <Limit />
-            </div>
-            <Pagination />
-          </div>
-        )}
-        <SearchResults />
-      </div>
-    </SearchContext.Provider>
-  );
-};
+  return {
+    apiRequestParams: { searchTerm, setSearchTerm, limit, setLimit },
+    apiRequestStatus,
+  };
+}

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useSearchContext } from '../shared/hooks';
+import { useSearchContext } from '../shared/context';
 
 interface FormFields {
   searchTerm: string;
@@ -10,11 +10,12 @@ export const SearchInput = () => {
   const {
     apiRequestParams: { searchTerm, setSearchTerm },
   } = useSearchContext();
-  const { register, handleSubmit, setFocus, setValue } = useForm<FormFields>();
+  const { register, handleSubmit, setFocus } = useForm<FormFields>({
+    defaultValues: { searchTerm },
+  });
 
   useEffect(() => {
     setFocus('searchTerm');
-    if (searchTerm) setValue('searchTerm', searchTerm);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

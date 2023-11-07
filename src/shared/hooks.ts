@@ -1,7 +1,6 @@
-import { SetStateAction, useContext, useState } from 'react';
+import { SetStateAction, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { getSearchTermFromLS, setSearchTermToLS } from '../utils/localStorage';
-import { SearchContext } from './context';
 
 export function usePage(): [number, (s: SetStateAction<number>) => void] {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -24,10 +23,6 @@ export function useSearchTerm(): [string, (s: string) => void] {
     setSearchTermToLS(searchTerm);
   };
   return [searchTerm, updateSearchTerm];
-}
-
-export function useSearchContext() {
-  return useContext(SearchContext);
 }
 
 export function useLimit(

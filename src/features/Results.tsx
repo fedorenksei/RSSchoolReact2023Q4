@@ -2,7 +2,7 @@ import React, { MouseEvent } from 'react';
 import { Product } from '../entities/Product';
 import { useNavigate } from 'react-router-dom';
 import { Loader } from '../entities/Loader';
-import { useSearchContext } from '../shared/hooks';
+import { useSearchContext } from '../shared/context';
 
 export const SearchResults = () => {
   const { apiRequestStatus } = useSearchContext();

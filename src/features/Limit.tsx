@@ -1,6 +1,6 @@
 import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useSearchContext } from '../shared/hooks';
+import { useSearchContext } from '../shared/context';
 
 interface FormFields {
   limit: number;

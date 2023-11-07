@@ -1,4 +1,4 @@
-import { createContext } from 'react';
+import { createContext, useContext } from 'react';
 import { ApiRequestStatus } from './types';
 
 interface Context {
@@ -20,3 +20,7 @@ export const SearchContext = createContext<Context>({
   },
   apiRequestStatus: null,
 });
+
+export function useSearchContext() {
+  return useContext(SearchContext);
+}
