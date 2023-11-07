@@ -4,3 +4,10 @@ export interface ProductData {
   description: string;
   imageUrl: string;
 }
+
+interface ok200ApiResponse {
+  total: number;
+  results: ProductData[];
+}
+
+export type ApiRequestStatus = null | ok200ApiResponse | 'loading' | 'error';

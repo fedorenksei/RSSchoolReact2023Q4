@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { Api } from '../shared/api';
+import { Api } from '../utils/api';
 import { ProductData } from '../shared/types';
 import { Product } from '../entities/Product';
 import { Loader } from '../entities/Loader';
