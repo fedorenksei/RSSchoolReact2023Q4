@@ -17,10 +17,12 @@ export function usePage(): [number, (s: SetStateAction<number>) => void] {
 }
 
 export function useSearchTerm(): [string, (s: string) => void] {
+  const [, setPage] = usePage();
   const [searchTerm, setSearchTerm] = useState<string>(getSearchTermFromLS());
   const updateSearchTerm = (searchTerm: string) => {
     setSearchTerm(searchTerm);
     setSearchTermToLS(searchTerm);
+    setPage(1);
   };
   return [searchTerm, updateSearchTerm];
 }
