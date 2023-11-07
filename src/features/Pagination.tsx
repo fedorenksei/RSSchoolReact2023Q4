@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction } from 'react';
-import { Button } from '../entities/button';
+import { Button } from '../entities/Button';
 
 interface Props {
   page: number;

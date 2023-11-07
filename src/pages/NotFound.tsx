@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { Button } from '../entities/button';
+import { Button } from '../entities/Button';
 
 export const NotFound = () => {
   const navigate = useNavigate();

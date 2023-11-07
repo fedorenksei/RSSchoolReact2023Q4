@@ -1,11 +1,11 @@
 import React, { MouseEvent, SetStateAction, useEffect, useState } from 'react';
-import { Product } from '../../entities/product';
-import { Api } from '../../shared/api';
-import { ProductData } from '../../shared/types';
-import { Pagination } from '../../features/pagination';
-import { Limit } from '../../features/limit';
+import { Product } from '../entities/Product';
+import { Api } from '../shared/api';
+import { ProductData } from '../shared/types';
+import { Pagination } from './Pagination';
+import { Limit } from './Limit';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { Loader } from '../../entities/loader';
+import { Loader } from '../entities/Loader';
 
 interface ApiResponse {
   total: number;

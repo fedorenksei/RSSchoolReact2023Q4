@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
-import { SearchInput } from './input';
-import { SearchResults } from './results';
+import { SearchInput } from '../features/Input';
+import { SearchResults } from '../features/Results';
 import { useNavigate } from 'react-router-dom';
 
 export const Search = () => {

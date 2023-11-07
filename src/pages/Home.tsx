@@ -1,7 +1,7 @@
 import React from 'react';
-import { Search } from '../widgets/search';
-import { TestError } from '../entities/testError';
-import { ErrorBoundary } from './errorBoundary';
+import { Search } from '../widgets/Search';
+import { TestError } from '../entities/TestError';
+import { ErrorBoundary } from './ErrorBoundary';
 import { Outlet } from 'react-router-dom';
 
 export const Home = () => {

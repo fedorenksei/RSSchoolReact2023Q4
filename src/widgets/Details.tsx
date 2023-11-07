@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { Api } from '../../shared/api';
-import { ProductData } from '../../shared/types';
-import { Product } from '../../entities/product';
-import { Loader } from '../../entities/loader';
+import { Api } from '../shared/api';
+import { ProductData } from '../shared/types';
+import { Product } from '../entities/Product';
+import { Loader } from '../entities/Loader';
 
 export const Details = () => {
   const { detailsId } = useParams();
