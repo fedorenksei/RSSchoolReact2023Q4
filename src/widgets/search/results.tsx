@@ -13,10 +13,10 @@ interface ApiResponse {
 }
 
 interface Props {
-  query: string | null;
+  searchTerm: string | null;
 }
 
-export const SearchResults = ({ query }: Props) => {
+export const SearchResults = ({ searchTerm }: Props) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const pageParam = searchParams.get('page');
   const page = +(pageParam || '1');
@@ -33,12 +33,12 @@ export const SearchResults = ({ query }: Props) => {
 
   useEffect(() => {
     (async () => {
-      if (query === null) return;
+      if (searchTerm === null) return;
       setIsLoading(true);
       try {
         const api = Api.getInstance();
         const response = await api.getSearchResults({
-          query,
+          searchTerm: searchTerm,
           page,
           limit,
         });
@@ -52,7 +52,7 @@ export const SearchResults = ({ query }: Props) => {
       setIsLoading(false);
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [query, page, limit]);
+  }, [searchTerm, page, limit]);
 
   const setLimitResetPage = (limit: SetStateAction<number>) => {
     setLimit(limit);

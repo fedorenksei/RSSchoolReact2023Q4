@@ -1,7 +1,7 @@
 import { ProductData } from './types';
 
 interface SearchParams {
-  query: string;
+  searchTerm: string;
   page: number;
   limit: number;
 }
@@ -14,10 +14,10 @@ export class Api {
     return this.instance;
   }
 
-  async getSearchResults({ query, limit, page }: SearchParams) {
+  async getSearchResults({ searchTerm, limit, page }: SearchParams) {
     const response = await fetch(
       `https://dummyjson.com/products${
-        query ? `/search?q=${query}` : '?'
+        searchTerm ? `/search?q=${searchTerm}` : '?'
       }&limit=${limit}&skip=${limit * (page - 1)}`
     );
     if (!response.ok) {

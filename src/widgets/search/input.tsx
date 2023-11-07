@@ -4,28 +4,28 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 const LS_ITEM_NAME = 'userSearchQuery';
 
 interface Props {
-  handleQuery: (query: string) => void;
+  handleSearchTerm: (searchTerm: string) => void;
 }
 
 interface FormFields {
-  query: string;
+  searchTerm: string;
 }
 
-export const SearchInput = ({ handleQuery }: Props) => {
+export const SearchInput = ({ handleSearchTerm }: Props) => {
   const { register, handleSubmit, setFocus, setValue } = useForm<FormFields>();
 
   useEffect(() => {
-    setFocus('query');
-    const query = localStorage.getItem(LS_ITEM_NAME);
-    if (query) setValue('query', query);
-    handleQuery(query || '');
+    setFocus('searchTerm');
+    const searchTerm = localStorage.getItem(LS_ITEM_NAME);
+    if (searchTerm) setValue('searchTerm', searchTerm);
+    handleSearchTerm(searchTerm || '');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const onSubmit: SubmitHandler<FormFields> = ({ query }) => {
-    const queryTrimmed = query.trim();
-    handleQuery(queryTrimmed);
-    localStorage.setItem(LS_ITEM_NAME, queryTrimmed);
+  const onSubmit: SubmitHandler<FormFields> = ({ searchTerm }) => {
+    const searchTermTrimmed = searchTerm.trim();
+    handleSearchTerm(searchTermTrimmed);
+    localStorage.setItem(LS_ITEM_NAME, searchTermTrimmed);
   };
 
   return (
@@ -36,7 +36,7 @@ export const SearchInput = ({ handleQuery }: Props) => {
     >
       <input
         className="border p-2 px-4 rounded-full hover:border-violet-700"
-        {...register('query')}
+        {...register('searchTerm')}
       />
       <button type="submit" className="hover:text-green-600 transition">
         Go!

@@ -4,8 +4,11 @@ import { SearchResults } from './results';
 import { useNavigate } from 'react-router-dom';
 
 export const Search = () => {
-  const [query, setQuery] = useState<string | null>(null);
-  const handleQuery = useCallback((query: string) => setQuery(query), []);
+  const [searchTerm, setSearchTerm] = useState<string | null>(null);
+  const handleSearchTerm = useCallback(
+    (searchTerm: string) => setSearchTerm(searchTerm),
+    []
+  );
   const navigate = useNavigate();
 
   return (
@@ -14,8 +17,8 @@ export const Search = () => {
       onClick={() => navigate(`/${window.location.search}`)}
     >
       <h1 className="text-3xl">Search for Products of DummyJSON</h1>
-      <SearchInput handleQuery={handleQuery} />
-      <SearchResults query={query} />
+      <SearchInput handleSearchTerm={handleSearchTerm} />
+      <SearchResults searchTerm={searchTerm} />
     </div>
   );
 };
