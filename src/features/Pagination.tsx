@@ -4,6 +4,7 @@ import { usePage } from '../shared/hooks';
 import { useSearchContext } from '../shared/context';
 
 export const Pagination = () => {
+  console.log('pagination');
   const [page, setPage] = usePage();
   const {
     apiRequestStatus,
