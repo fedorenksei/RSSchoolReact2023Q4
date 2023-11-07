@@ -70,7 +70,7 @@ export const SearchResults = ({ searchTerm }: Props) => {
         {results.map((data) => (
           <div
             onClick={(e: MouseEvent) => {
-              navigate(`/${data.id}${window.location.search}`);
+              navigate(`details/${data.id}${window.location.search}`);
               e.stopPropagation();
             }}
             key={data.id}
