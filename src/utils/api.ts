@@ -1,4 +1,4 @@
-import { ProductData } from './types';
+import { ProductData } from '../shared/types';
 
 interface SearchParams {
   searchTerm: string;
