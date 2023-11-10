@@ -30,6 +30,10 @@ export const Limit = () => {
           className="border rounded-sm"
         />
       </label>
+      <input
+        // className="hidden"
+        type="submit"
+      />
     </form>
   );
 };

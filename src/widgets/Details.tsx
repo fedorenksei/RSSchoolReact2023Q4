@@ -22,7 +22,6 @@ export const Details = () => {
         setHasError(false);
       } catch (err) {
         setHasError(true);
-        console.log(err);
       }
       setIsLoading(false);
     })();

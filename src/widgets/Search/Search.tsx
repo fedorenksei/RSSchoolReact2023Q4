@@ -8,7 +8,6 @@ import { Pagination } from '../../features/Pagination';
 import { useSearchManagement } from './hooks';
 
 export const Search = () => {
-  console.log('search');
   const navigate = useNavigate();
   const { apiRequestParams, apiRequestStatus } = useSearchManagement();
 
