@@ -19,4 +19,14 @@ describe('Card List', () => {
     screen.getByTestId('loader');
     expect(await screen.findAllByRole('img')).toHaveLength(newValue);
   });
+
+  it('an appropriate message is displayed if no cards are present', async () => {
+    const user = userEvent.setup();
+    render(<App />);
+    expect(await screen.findAllByRole('img')).toHaveLength(DEFAULT_LIMIT);
+    await act(async () => {
+      await user.type(screen.getByRole('textbox'), 'some input{enter}');
+    });
+    screen.findByText(/have not found anything/i);
+  });
 });

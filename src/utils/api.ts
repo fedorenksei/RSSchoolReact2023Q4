@@ -21,6 +21,8 @@ export class Api {
       }&limit=${limit}&skip=${limit * (page - 1)}`
     );
     if (!response.ok) {
+      console.log(response.status);
+      console.log(await response.json());
       throw new Error("Response's status is not 200 OK");
     }
     const body = await response.json();
