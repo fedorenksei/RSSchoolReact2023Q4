@@ -16,7 +16,16 @@ const searchResponder = async ({ request }) => {
   );
 };
 
+const detailsResponder = async ({ params }) => {
+  const { detailsId } = params;
+  const product = products.filter((p) => p.id == detailsId)[0];
+  if (!product) throw new Error('wrong value of detailsId path parameter');
+  await delay(100);
+  return HttpResponse.json(product, { status: 200 });
+};
+
 export const handlers = [
   http.get('https://dummyjson.com/products', searchResponder),
   http.get('https://dummyjson.com/products/search', searchResponder),
+  http.get('https://dummyjson.com/products/:detailsId', detailsResponder),
 ];
