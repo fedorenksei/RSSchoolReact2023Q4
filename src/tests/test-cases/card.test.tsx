@@ -4,23 +4,10 @@ import {
   screen,
   waitForElementToBeRemoved,
 } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import React from 'react';
 import { describe, expect, test, vi } from 'vitest';
 import { Product } from '../../entities/Product';
 import { products } from '../server/mock-data';
-import { RouterProvider, createMemoryRouter } from 'react-router-dom';
-import { routes } from '../../app/routes';
-
-const renderApp = () => {
-  const user = userEvent.setup();
-  render(
-    <RouterProvider
-      router={createMemoryRouter(routes, { initialEntries: ['/'] })}
-    />
-  );
-  return { user };
-};
+import { renderApp } from './utils';
 
 describe('Card', () => {
   test('renders the relevant card data', () => {
