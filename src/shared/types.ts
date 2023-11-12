@@ -11,3 +11,17 @@ interface ok200ApiResponse {
 }
 
 export type ApiRequestStatus = null | ok200ApiResponse | 'loading' | 'error';
+
+export interface apiProductData {
+  id: number;
+  title: string;
+  description: string;
+  price: number;
+  discountPercentage: number;
+  rating: number;
+  stock: number;
+  brand: string;
+  category: string;
+  thumbnail: string;
+  images: string[];
+}

@@ -1,19 +1,15 @@
-import {
-  act,
-  render,
-  screen,
-  waitForElementToBeRemoved,
-} from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import { describe, expect, test, vi } from 'vitest';
-import { Product } from '../../entities/Product';
+import { ProductUI } from '../../entities/Product';
 import { products } from '../server/mock-data';
-import { renderApp } from './utils';
+import { arrangeProduct } from './utils';
+import { BASE_URL } from '../../shared/constants';
 
 describe('Card', () => {
-  test('renders the relevant card data', () => {
+  test('6.1: renders the relevant card data', () => {
     const product = products[0];
     render(
-      <Product
+      <ProductUI
         view="card"
         data={{
           id: '' + product.id,
@@ -23,37 +19,36 @@ describe('Card', () => {
         }}
       />
     );
+
     const img = screen.getByRole('img') as HTMLImageElement;
     expect(img.src).toBe(product.thumbnail);
     screen.getByText(product.title);
     screen.getByText(product.description);
   });
 
-  test('clicking on a card opens a detailed card component', async () => {
-    const { user } = renderApp();
+  test('6.2: clicking on a card opens a detailed card component', async () => {
     const product = products[0];
-    const elem = await screen.findByText(product.title);
-    await act(async () => {
-      await user.click(elem);
-    });
-    await screen.findByTestId('loader');
-    await waitForElementToBeRemoved(() => screen.getByTestId('loader'));
-    expect(await screen.findAllByText(product.title)).toHaveLength(2);
+    const { actionClick } = arrangeProduct(product);
+
+    expect(screen.getAllByText(product.title)).toHaveLength(1);
+
+    await actionClick();
+
+    await waitFor(() =>
+      expect(screen.getAllByText(product.title)).toHaveLength(2)
+    );
   });
 
-  test('clicking triggers an additional API call to fetch detailed information', async () => {
+  test('6.3: clicking triggers an additional API call to fetch detailed information', async () => {
     const fetchSpy = vi.spyOn(window, 'fetch');
-    const { user } = renderApp();
+
     const product = products[0];
-    const elem = await screen.findByText(product.title);
-    await act(async () => {
-      await user.click(elem);
-    });
-    await screen.findByTestId('loader');
-    await waitForElementToBeRemoved(() => screen.getByTestId('loader'));
-    expect(await screen.findAllByText(product.title)).toHaveLength(2);
-    expect(fetchSpy).toHaveBeenCalledWith(
-      `https://dummyjson.com/products/${product.id}`
-    );
+    const { actionClick } = arrangeProduct(product);
+
+    expect(fetchSpy).not.toHaveBeenCalled();
+
+    await actionClick();
+
+    expect(fetchSpy).toHaveBeenCalledWith(`${BASE_URL}products/${product.id}`);
   });
 });
