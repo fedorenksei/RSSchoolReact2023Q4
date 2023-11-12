@@ -1,7 +1,8 @@
-import { HttpResponse, delay, http } from 'msw';
+import { HttpResponse, ResponseResolver, delay, http } from 'msw';
 import { products } from './mock-data';
+import { HttpRequestResolverExtras } from 'msw/lib/core/handlers/HttpHandler';
 
-const searchResponder = async ({ request }) => {
+const searchResponder: ResponseResolver = async ({ request }) => {
   const url = new URL(request.url);
   const searchTerm = url.searchParams.get('q');
   const limit = url.searchParams.get('limit');
@@ -16,9 +17,11 @@ const searchResponder = async ({ request }) => {
   );
 };
 
-const detailsResponder = async ({ params }) => {
+const detailsResponder: ResponseResolver<
+  HttpRequestResolverExtras<{ detailsId: string }>
+> = async ({ params }) => {
   const { detailsId } = params;
-  const product = products.filter((p) => p.id == detailsId)[0];
+  const product = products.filter((p) => p.id === +detailsId)[0];
   if (!product) throw new Error('wrong value of detailsId path parameter');
   await delay(100);
   return HttpResponse.json(product, { status: 200 });
