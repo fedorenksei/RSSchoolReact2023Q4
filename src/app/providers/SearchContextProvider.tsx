@@ -1,6 +1,6 @@
 import { PropsWithChildren } from 'react';
 import { SearchContext } from '../../shared/context';
-import { useSearchManagement } from '../../widgets/Search/hooks';
+import { useSearchManagement } from '../../shared/hooks';
 
 export const SearchContextProvider = ({ children }: PropsWithChildren) => {
   const { apiRequestParams, apiRequestStatus } = useSearchManagement();
