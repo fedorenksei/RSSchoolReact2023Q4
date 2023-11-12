@@ -12,7 +12,7 @@ const searchResponder: ResponseResolver = async ({ request }) => {
   return HttpResponse.json(
     {
       products: searchTerm ? [] : products.slice(0, +limit),
-      total: searchTerm ? 0 : limit,
+      total: searchTerm ? 0 : products.length,
     },
     { status: 200 }
   );

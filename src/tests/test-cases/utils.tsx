@@ -2,12 +2,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { ReactNode } from 'react';
 import { act } from 'react-dom/test-utils';
-import {
-  MemoryRouter,
-  Outlet,
-  RouterProvider,
-  createMemoryRouter,
-} from 'react-router-dom';
+import { Outlet, RouterProvider, createMemoryRouter } from 'react-router-dom';
 import { SearchContextProvider } from '../../app/providers/SearchContextProvider';
 import { Product } from '../../entities/Product';
 import { apiProductData } from '../../shared/types';
@@ -15,12 +10,14 @@ import { Details } from '../../widgets/Details';
 
 export const renderWithSearchContext = (children: ReactNode) => {
   const user = userEvent.setup();
-  render(
-    <MemoryRouter>
-      <SearchContextProvider>{children}</SearchContextProvider>
-    </MemoryRouter>
-  );
-  return { user };
+  const router = createMemoryRouter([
+    {
+      path: '*',
+      element: <SearchContextProvider>{children}</SearchContextProvider>,
+    },
+  ]);
+  render(<RouterProvider router={router} />);
+  return { user, router };
 };
 
 export const arrangeProduct = (product: apiProductData) => {
