@@ -1,4 +1,4 @@
-const LS_ITEM_NAME = 'userSearchQuery';
+import { LS_ITEM_NAME } from '../shared/constants';
 
 export const getSearchTermFromLS = () => {
   return localStorage.getItem(LS_ITEM_NAME) || '';
