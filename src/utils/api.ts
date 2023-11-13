@@ -1,7 +1,8 @@
-import { ProductData } from './types';
+import { BASE_URL } from '../shared/constants';
+import { ProductData } from '../shared/types';
 
 interface SearchParams {
-  query: string;
+  searchTerm: string;
   page: number;
   limit: number;
 }
@@ -14,10 +15,10 @@ export class Api {
     return this.instance;
   }
 
-  async getSearchResults({ query, limit, page }: SearchParams) {
+  async getSearchResults({ searchTerm, limit, page }: SearchParams) {
     const response = await fetch(
-      `https://dummyjson.com/products${
-        query ? `/search?q=${query}` : '?'
+      `${BASE_URL}products${
+        searchTerm ? `/search?q=${searchTerm}` : '?'
       }&limit=${limit}&skip=${limit * (page - 1)}`
     );
     if (!response.ok) {
@@ -42,7 +43,7 @@ export class Api {
   }
 
   async getProduct(id: string) {
-    const response = await fetch(`https://dummyjson.com/products/${id}`);
+    const response = await fetch(`${BASE_URL}products/${id}`);
     if (!response.ok) {
       throw new Error("Response's status is not 200 OK");
     }

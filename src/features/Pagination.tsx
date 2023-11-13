@@ -1,13 +1,20 @@
-import React, { Dispatch, SetStateAction } from 'react';
-import { Button } from '../entities/button';
+import React from 'react';
+import { Button } from '../entities/Button';
+import { usePage } from '../shared/hooks';
+import { useSearchContext } from '../shared/context';
 
-interface Props {
-  page: number;
-  setPage: Dispatch<SetStateAction<number>>;
-  pages: number;
-}
+export const Pagination = () => {
+  const [page, setPage] = usePage();
+  const {
+    apiRequestStatus,
+    apiRequestParams: { limit },
+  } = useSearchContext();
+  const total =
+    apiRequestStatus && typeof apiRequestStatus === 'object'
+      ? apiRequestStatus.total
+      : 0;
+  const pages = Math.ceil(total / limit);
 
-export const Pagination = ({ page, setPage, pages }: Props) => {
   return (
     <div className="flex gap-2 items-center">
       <Button disabled={page === 1} onClick={() => setPage((n) => n - 1)}>

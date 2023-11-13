@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { MouseEventHandler } from 'react';
 import { ProductData } from '../shared/types';
+import { useNavigate } from 'react-router-dom';
 
 interface Props {
   data: ProductData;
   view: 'card' | 'details';
 }
 
-export const Product = ({
+export const ProductUI = ({
   view,
   data: { imageUrl, name, description },
 }: Props) => {
@@ -28,5 +29,25 @@ export const Product = ({
         <p>{description}</p>
       </div>
     </div>
+  );
+};
+
+export const Product = (props: Props) => {
+  const { view, data } = props;
+  const navigate = useNavigate();
+  const openDetails: MouseEventHandler<HTMLDivElement> = (e) => {
+    navigate(`details/${data.id}${window.location.search}`);
+    e.stopPropagation();
+  };
+
+  return view === 'card' ? (
+    <div
+      onClick={openDetails}
+      className="cursor-pointer hover:shadow-lg hover:bg-blue-100 transition"
+    >
+      <ProductUI {...props} />
+    </div>
+  ) : (
+    <ProductUI {...props} />
   );
 };

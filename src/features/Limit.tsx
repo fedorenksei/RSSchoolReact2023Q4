@@ -1,21 +1,23 @@
-import React, { Dispatch, SetStateAction } from 'react';
+import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { useSearchContext } from '../shared/context';
 
 interface FormFields {
   limit: number;
 }
 
-interface Props {
-  limit: number;
-  setLimit: Dispatch<SetStateAction<number>>;
-}
+export const Limit = () => {
+  const {
+    apiRequestParams: { limit, setLimit },
+  } = useSearchContext();
 
-export const Limit = ({ limit, setLimit }: Props) => {
   const { register, handleSubmit } = useForm<FormFields>({
     mode: 'onChange',
     defaultValues: { limit },
   });
+
   const onSubmit: SubmitHandler<FormFields> = ({ limit }) => setLimit(limit);
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <label className="flex gap-1">
@@ -28,6 +30,7 @@ export const Limit = ({ limit, setLimit }: Props) => {
           className="border rounded-sm"
         />
       </label>
+      <input className="hidden" type="submit" />
     </form>
   );
 };
