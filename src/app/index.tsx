@@ -1,13 +1,6 @@
-import React, { Component } from 'react';
-import { ErrorBoundary } from './errorBoundary';
-import { Home } from '../pages/home';
+import React from 'react';
+import { RootRouter } from './router';
 
-export class App extends Component {
-  render() {
-    return (
-      <ErrorBoundary>
-        <Home />
-      </ErrorBoundary>
-    );
-  }
-}
+export const App = () => {
+  return <RootRouter />;
+};

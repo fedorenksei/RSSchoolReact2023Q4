@@ -1,6 +1,10 @@
-import { CharacterData } from './types';
+import { ProductData } from './types';
 
-const API_KEY = 'fcd41195ddfdb5c4521b26aff45b7db5';
+interface SearchParams {
+  query: string;
+  page: number;
+  limit: number;
+}
 
 export class Api {
   static instance: Api;
@@ -10,29 +14,49 @@ export class Api {
     return this.instance;
   }
 
-  async getSearchResults(query: string) {
+  async getSearchResults({ query, limit, page }: SearchParams) {
     const response = await fetch(
-      `https://gateway.marvel.com/v1/public/characters?${
-        query ? `nameStartsWith=${query}` : ''
-      }&apikey=${API_KEY}`
+      `https://dummyjson.com/products${
+        query ? `/search?q=${query}` : '?'
+      }&limit=${limit}&skip=${limit * (page - 1)}`
     );
     if (!response.ok) {
       throw new Error("Response's status is not 200 OK");
     }
     const body = await response.json();
-    const results: CharacterData[] = body.data.results.map(
+    const results: ProductData[] = body.products.map(
       (data: {
         id: string;
-        name: string;
+        title: string;
         description: string;
-        thumbnail: { path: string; extension: string };
+        thumbnail: string;
       }) => ({
         id: data.id,
-        name: data.name,
+        name: data.title,
         description: data.description,
-        imageUrl: `${data.thumbnail?.path}.${data.thumbnail?.extension}`,
+        imageUrl: data.thumbnail,
       })
     );
-    return results;
+    const total: number = body.total;
+    return { results, total };
+  }
+
+  async getProduct(id: string) {
+    const response = await fetch(`https://dummyjson.com/products/${id}`);
+    if (!response.ok) {
+      throw new Error("Response's status is not 200 OK");
+    }
+    const data: {
+      id: string;
+      title: string;
+      description: string;
+      thumbnail: string;
+    } = await response.json();
+    return {
+      id: data.id,
+      name: data.title,
+      description: data.description,
+      imageUrl: data.thumbnail,
+    };
   }
 }

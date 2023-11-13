@@ -1,58 +1,100 @@
-import React, { Component } from 'react';
-import { Character } from '../../entities/character';
+import React, { MouseEvent, SetStateAction, useEffect, useState } from 'react';
+import { Product } from '../../entities/product';
 import { Api } from '../../shared/api';
-import { CharacterData } from '../../shared/types';
+import { ProductData } from '../../shared/types';
+import { Pagination } from '../../features/pagination';
+import { Limit } from '../../features/limit';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { Loader } from '../../entities/loader';
+
+interface ApiResponse {
+  total: number;
+  results: ProductData[];
+}
 
 interface Props {
-  query: string;
+  query: string | null;
 }
 
-interface State {
-  results: CharacterData[] | null;
-  hasError: boolean;
-  isLoading: boolean;
-}
+export const SearchResults = ({ query }: Props) => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const pageParam = searchParams.get('page');
+  const page = +(pageParam || '1');
+  const setPage = (pageSetter: SetStateAction<number>) => {
+    setSearchParams({
+      page: `${typeof pageSetter === 'number' ? pageSetter : pageSetter(page)}`,
+    });
+  };
+  const [limit, setLimit] = useState(10);
+  const [response, setResponse] = useState<ApiResponse | null>(null);
+  const [hasError, setHasError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
-export class SearchResults extends Component<Props, State> {
-  state: State = {
-    results: null,
-    hasError: false,
-    isLoading: false,
+  useEffect(() => {
+    (async () => {
+      if (query === null) return;
+      setIsLoading(true);
+      try {
+        const api = Api.getInstance();
+        const response = await api.getSearchResults({
+          query,
+          page,
+          limit,
+        });
+        if (response.total && !response.results.length) setPage(1);
+        setResponse(response);
+        setHasError(false);
+      } catch (err) {
+        setHasError(true);
+        console.log(err);
+      }
+      setIsLoading(false);
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [query, page, limit]);
+
+  const setLimitResetPage = (limit: SetStateAction<number>) => {
+    setLimit(limit);
+    setPage(1);
   };
 
-  render() {
-    return this.state.hasError ? (
-      <p>Something went wrong...</p>
-    ) : this.state.isLoading || !this.state.results ? (
-      <p>Loading...</p>
-    ) : (
-      <div className="max-w-xl">
-        {this.state.results.length ? (
-          this.state.results.map((data) => (
-            <Character key={data.id} {...data} />
-          ))
-        ) : (
-          <p>Have not found anything...</p>
-        )}
+  const { results, total } = response || {};
+  let searchResults;
+  if (hasError) searchResults = <p>Something went wrong...</p>;
+  else if (!results || isLoading) searchResults = <Loader />;
+  else if (!results.length) searchResults = <p>Have not found anything...</p>;
+  else {
+    searchResults = (
+      <div>
+        {results.map((data) => (
+          <div
+            onClick={(e: MouseEvent) => {
+              navigate(`/${data.id}${window.location.search}`);
+              e.stopPropagation();
+            }}
+            key={data.id}
+            className="cursor-pointer hover:shadow-lg hover:bg-blue-100 transition"
+          >
+            <Product view="card" data={data} />
+          </div>
+        ))}
       </div>
     );
   }
 
-  async componentDidUpdate(prevProps: Props) {
-    if (
-      this.props.query === prevProps.query &&
-      (this.state.results || this.state.hasError || this.state.isLoading)
-    )
-      return;
-
-    this.setState({ isLoading: true });
-    try {
-      const api = Api.getInstance();
-      const results = await api.getSearchResults(this.props.query);
-      this.setState({ results, hasError: false });
-    } catch (err) {
-      this.setState({ hasError: true });
-    }
-    this.setState({ isLoading: false });
-  }
-}
+  return (
+    <div className="max-w-xl flex flex-col gap-7 items-center">
+      {results && total && (
+        <div className="flex flex-col gap-4 items-center">
+          <div className="self-stretch flex justify-between gap-5 flex-wrap items-center">
+            <p>Total: {total}</p>
+            <Limit {...{ limit, setLimit: setLimitResetPage }} />
+          </div>
+          <Pagination {...{ page, setPage, pages: Math.ceil(total / limit) }} />
+        </div>
+      )}
+      {searchResults}
+    </div>
+  );
+};
