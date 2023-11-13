@@ -1,6 +1,6 @@
-import { Loader } from '../entities/Loader';
+import { Loader } from '../shared/ui-kit/Loader';
 import { Product } from '../entities/Product';
-import { useSearchContext } from '../shared/context';
+import { useSearchContext } from '../app/store/context';
 
 export const SearchResults = () => {
   const { apiRequestStatus } = useSearchContext();

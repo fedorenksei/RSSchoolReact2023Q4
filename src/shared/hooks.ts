@@ -1,8 +1,11 @@
 import { SetStateAction, useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { ApiRequestStatus } from './types';
-import { Api } from '../utils/api';
-import { getSearchTermFromLS, setSearchTermToLS } from '../utils/localStorage';
+import { ApiRequestStatus } from './data/types';
+import { Api } from './external/api';
+import {
+  getSearchTermFromLS,
+  setSearchTermToLS,
+} from './external/localStorage';
 
 export function usePage(): [number, (s: SetStateAction<number>) => void] {
   const [searchParams, setSearchParams] = useSearchParams();

@@ -1,4 +1,4 @@
-import { apiProductData } from '../../shared/types';
+import { apiProductData } from '../../shared/data/types';
 
 export const products: apiProductData[] = [
   {

@@ -1,5 +1,5 @@
-import { BASE_URL } from '../shared/constants';
-import { ProductData } from '../shared/types';
+import { BASE_URL } from '../data/constants';
+import { ProductData } from '../data/types';
 
 interface SearchParams {
   searchTerm: string;

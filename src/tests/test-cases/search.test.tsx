@@ -2,7 +2,7 @@ import { describe, expect, test } from 'vitest';
 import { renderWithSearchContext } from './utils';
 import { SearchInput } from '../../features/Input';
 import { screen } from '@testing-library/react';
-import { LS_ITEM_NAME } from '../../shared/constants';
+import { LS_ITEM_NAME } from '../../shared/data/constants';
 
 describe('Search Input', () => {
   test('9.1: clicking the Search button saves the entered value to the local storage', async () => {

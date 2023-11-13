@@ -3,7 +3,7 @@ import { SearchInput } from '../features/Input';
 import { Limit } from '../features/Limit';
 import { Pagination } from '../features/Pagination';
 import { SearchResults } from '../features/Results';
-import { useSearchContext } from '../shared/context';
+import { useSearchContext } from '../app/store/context';
 
 export const Search = () => {
   const navigate = useNavigate();

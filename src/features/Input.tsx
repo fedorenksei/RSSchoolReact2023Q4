@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useSearchContext } from '../shared/context';
+import { useSearchContext } from '../app/store/context';
 
 interface FormFields {
   searchTerm: string;

@@ -5,7 +5,7 @@ import { act } from 'react-dom/test-utils';
 import { Outlet, RouterProvider, createMemoryRouter } from 'react-router-dom';
 import { SearchContextProvider } from '../../app/providers/SearchContextProvider';
 import { Product } from '../../entities/Product';
-import { apiProductData } from '../../shared/types';
+import { apiProductData } from '../../shared/data/types';
 import { Details } from '../../widgets/Details';
 
 export const renderWithSearchContext = (children: ReactNode) => {

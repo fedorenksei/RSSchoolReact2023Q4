@@ -3,7 +3,7 @@ import { describe, expect, test, vi } from 'vitest';
 import { ProductUI } from '../../entities/Product';
 import { products } from '../server/mock-data';
 import { arrangeProduct } from './utils';
-import { BASE_URL } from '../../shared/constants';
+import { BASE_URL } from '../../shared/data/constants';
 
 describe('Card', () => {
   test('6.1: renders the relevant card data', () => {

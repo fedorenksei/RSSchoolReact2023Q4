@@ -1,7 +1,7 @@
 import React from 'react';
-import { Button } from '../entities/Button';
+import { Button } from '../shared/ui-kit/Button';
 import { usePage } from '../shared/hooks';
-import { useSearchContext } from '../shared/context';
+import { useSearchContext } from '../app/store/context';
 
 export const Pagination = () => {
   const [page, setPage] = usePage();

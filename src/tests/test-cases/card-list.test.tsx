@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 import { SearchInput } from '../../features/Input';
 import { Limit } from '../../features/Limit';
 import { SearchResults } from '../../features/Results';
-import { DEFAULT_LIMIT } from '../../shared/constants';
+import { DEFAULT_LIMIT } from '../../shared/data/constants';
 import { renderWithSearchContext } from './utils';
 
 describe('Card List', () => {

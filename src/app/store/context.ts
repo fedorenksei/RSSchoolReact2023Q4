@@ -1,5 +1,5 @@
 import { createContext, useContext } from 'react';
-import { ApiRequestStatus } from './types';
+import { ApiRequestStatus } from '../../shared/data/types';
 
 interface Context {
   apiRequestParams: {

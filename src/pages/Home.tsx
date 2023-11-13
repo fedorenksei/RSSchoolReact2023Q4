@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router-dom';
-import { TestError } from '../entities/TestError';
+import { TestError } from '../features/TestError';
 import { Search } from '../widgets/Search';
 
 export const Home = () => {
