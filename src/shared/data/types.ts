@@ -12,6 +12,11 @@ interface ok200ApiResponse {
 
 export type ApiRequestStatus = null | ok200ApiResponse | 'loading' | 'error';
 
+export interface ApiRequestParams {
+  searchTerm: string;
+  setSearchTerm: (s: string) => void;
+}
+
 export interface apiProductData {
   id: number;
   title: string;

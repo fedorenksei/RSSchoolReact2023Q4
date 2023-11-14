@@ -1,13 +1,8 @@
 import { createContext, useContext } from 'react';
-import { ApiRequestStatus } from '../../shared/data/types';
+import { ApiRequestParams, ApiRequestStatus } from '../../shared/data/types';
 
 interface Context {
-  apiRequestParams: {
-    searchTerm: string;
-    setSearchTerm: (s: string) => void;
-    limit: number;
-    setLimit: (s: number) => void;
-  };
+  apiRequestParams: ApiRequestParams;
   apiRequestStatus: ApiRequestStatus;
 }
 
@@ -15,8 +10,6 @@ export const SearchContext = createContext<Context>({
   apiRequestParams: {
     searchTerm: '',
     setSearchTerm: () => {},
-    limit: 0,
-    setLimit: () => {},
   },
   apiRequestStatus: null,
 });

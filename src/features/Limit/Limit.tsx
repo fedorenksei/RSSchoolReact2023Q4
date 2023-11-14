@@ -1,22 +1,29 @@
 import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useSearchContext } from '../app/store/context';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../app/store/store';
+import { setLimit } from './limit-slice';
+import { usePage } from '../../shared/hooks';
 
 interface FormFields {
   limit: number;
 }
 
 export const Limit = () => {
-  const {
-    apiRequestParams: { limit, setLimit },
-  } = useSearchContext();
+  const limit = useSelector((state: RootState) => state.limit.value);
+  const dispatch = useDispatch();
+  const [, setPage] = usePage();
 
   const { register, handleSubmit } = useForm<FormFields>({
     mode: 'onChange',
     defaultValues: { limit },
   });
 
-  const onSubmit: SubmitHandler<FormFields> = ({ limit }) => setLimit(limit);
+  const onSubmit: SubmitHandler<FormFields> = ({ limit }) => {
+    dispatch(setLimit(limit));
+    // TODO: get it out to a Redux thunk (?)
+    setPage(1);
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

@@ -1,7 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
+import limitSlice from '../../features/Limit/limit-slice';
 
 export const store = configureStore({
-  reducer: {},
+  reducer: {
+    limit: limitSlice,
+  },
 });
 
 export type RootState = ReturnType<typeof store.getState>;

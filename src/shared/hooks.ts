@@ -1,11 +1,13 @@
 import { SetStateAction, useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { ApiRequestStatus } from './data/types';
+import { ApiRequestParams, ApiRequestStatus } from './data/types';
 import { Api } from './external/api';
 import {
   getSearchTermFromLS,
   setSearchTermToLS,
 } from './external/localStorage';
+import { useSelector } from 'react-redux';
+import { RootState } from '../app/store/store';
 
 export function usePage(): [number, (s: SetStateAction<number>) => void] {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -21,12 +23,16 @@ export function usePage(): [number, (s: SetStateAction<number>) => void] {
   return [page, setPage];
 }
 
-export function useSearchManagement() {
+export function useSearchManagement(): {
+  apiRequestParams: ApiRequestParams;
+  apiRequestStatus: ApiRequestStatus;
+} {
   const [page, setPage] = usePage();
   const [searchTerm, setSearchTerm] = useSearchTerm({ setPage });
   const [apiRequestStatus, setApiRequestStatus] =
     useState<ApiRequestStatus>(null);
-  const [limit, setLimit] = useLimit({ defaultLimit: 10, setPage });
+  // const [limit, setLimit] = useLimit({ defaultLimit: 10, setPage });
+  const limit = useSelector((state: RootState) => state.limit.value);
 
   useEffect(() => {
     (async () => {
@@ -48,7 +54,7 @@ export function useSearchManagement() {
   }, [searchTerm, page, limit]);
 
   return {
-    apiRequestParams: { searchTerm, setSearchTerm, limit, setLimit },
+    apiRequestParams: { searchTerm, setSearchTerm },
     apiRequestStatus,
   };
 }
@@ -65,19 +71,4 @@ function useSearchTerm({
     setPage(1);
   };
   return [searchTerm, updateSearchTerm];
-}
-
-function useLimit({
-  defaultLimit,
-  setPage,
-}: {
-  defaultLimit: number;
-  setPage: (s: SetStateAction<number>) => void;
-}): [number, (s: SetStateAction<number>) => void] {
-  const [limit, setLimit] = useState(defaultLimit);
-  const setLimitResetPage = (limit: SetStateAction<number>) => {
-    setLimit(limit);
-    setPage(1);
-  };
-  return [limit, setLimitResetPage];
 }
