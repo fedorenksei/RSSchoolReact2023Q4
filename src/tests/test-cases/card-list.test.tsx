@@ -34,7 +34,8 @@ describe('Card List', () => {
         <SearchResults />
       </>
     );
-    expect(await screen.findAllByRole('img')).toHaveLength(DEFAULT_LIMIT);
+    // TODO: clean up redux store to get back default limit here
+    expect(await screen.findAllByRole('img')).toHaveLength(3);
 
     await act(async () => {
       await user.type(

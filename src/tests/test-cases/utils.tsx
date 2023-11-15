@@ -7,13 +7,19 @@ import { SearchContextProvider } from '../../app/providers/SearchContextProvider
 import { Product } from '../../entities/Product';
 import { apiProductData } from '../../shared/data/types';
 import { Details } from '../../widgets/Details';
+import { store } from '../../app/store/store';
+import { Provider } from 'react-redux';
 
 export const renderWithSearchContext = (children: ReactNode) => {
   const user = userEvent.setup();
   const router = createMemoryRouter([
     {
       path: '*',
-      element: <SearchContextProvider>{children}</SearchContextProvider>,
+      element: (
+        <Provider store={store}>
+          <SearchContextProvider>{children}</SearchContextProvider>,
+        </Provider>
+      ),
     },
   ]);
   render(<RouterProvider router={router} />);
