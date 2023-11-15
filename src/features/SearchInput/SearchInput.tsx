@@ -1,18 +1,22 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useSearchContext } from '../app/store/context';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../app/store/store';
+import { setSearchTerm } from './search-term-slice';
+import { usePage } from '../../shared/hooks';
+import { setSearchTermToLS } from '../../shared/external/localStorage';
 
 interface FormFields {
   searchTerm: string;
 }
 
 export const SearchInput = () => {
-  const {
-    apiRequestParams: { searchTerm, setSearchTerm },
-  } = useSearchContext();
+  const dispatch = useDispatch();
+  const searchTerm = useSelector((state: RootState) => state.searchTerm.value);
   const { register, handleSubmit, setFocus } = useForm<FormFields>({
     defaultValues: { searchTerm },
   });
+  const [, setPage] = usePage();
 
   useEffect(() => {
     setFocus('searchTerm');
@@ -21,7 +25,10 @@ export const SearchInput = () => {
 
   const onSubmit: SubmitHandler<FormFields> = ({ searchTerm }) => {
     const searchTermTrimmed = searchTerm.trim();
-    setSearchTerm(searchTermTrimmed);
+    dispatch(setSearchTerm(searchTermTrimmed));
+    // TODO: get it out to a Redux thunk (?)
+    setPage(1);
+    setSearchTermToLS(searchTermTrimmed);
   };
 
   return (

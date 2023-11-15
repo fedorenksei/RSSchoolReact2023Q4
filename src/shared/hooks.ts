@@ -1,13 +1,9 @@
 import { SetStateAction, useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import { ApiRequestParams, ApiRequestStatus } from './data/types';
-import { Api } from './external/api';
-import {
-  getSearchTermFromLS,
-  setSearchTermToLS,
-} from './external/localStorage';
 import { useSelector } from 'react-redux';
+import { useSearchParams } from 'react-router-dom';
 import { RootState } from '../app/store/store';
+import { ApiRequestStatus } from './data/types';
+import { Api } from './external/api';
 
 export function usePage(): [number, (s: SetStateAction<number>) => void] {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -24,14 +20,13 @@ export function usePage(): [number, (s: SetStateAction<number>) => void] {
 }
 
 export function useSearchManagement(): {
-  apiRequestParams: ApiRequestParams;
   apiRequestStatus: ApiRequestStatus;
 } {
   const [page, setPage] = usePage();
-  const [searchTerm, setSearchTerm] = useSearchTerm({ setPage });
   const [apiRequestStatus, setApiRequestStatus] =
     useState<ApiRequestStatus>(null);
   // const [limit, setLimit] = useLimit({ defaultLimit: 10, setPage });
+  const searchTerm = useSelector((state: RootState) => state.searchTerm.value);
   const limit = useSelector((state: RootState) => state.limit.value);
 
   useEffect(() => {
@@ -40,7 +35,7 @@ export function useSearchManagement(): {
       try {
         const api = Api.getInstance();
         const response = await api.getSearchResults({
-          searchTerm: searchTerm,
+          searchTerm,
           page,
           limit,
         });
@@ -54,21 +49,6 @@ export function useSearchManagement(): {
   }, [searchTerm, page, limit]);
 
   return {
-    apiRequestParams: { searchTerm, setSearchTerm },
     apiRequestStatus,
   };
-}
-
-function useSearchTerm({
-  setPage,
-}: {
-  setPage: (s: SetStateAction<number>) => void;
-}): [string, (s: string) => void] {
-  const [searchTerm, setSearchTerm] = useState<string>(getSearchTermFromLS());
-  const updateSearchTerm = (searchTerm: string) => {
-    setSearchTerm(searchTerm);
-    setSearchTermToLS(searchTerm);
-    setPage(1);
-  };
-  return [searchTerm, updateSearchTerm];
 }
