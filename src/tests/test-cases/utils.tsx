@@ -5,7 +5,7 @@ import { act } from 'react-dom/test-utils';
 import { Outlet, RouterProvider, createMemoryRouter } from 'react-router-dom';
 import { SearchContextProvider } from '../../app/providers/SearchContextProvider';
 import { Product } from '../../entities/Product';
-import { apiProductData } from '../../shared/data/types';
+import { ApiProductData } from '../../shared/data/types';
 import { Details } from '../../widgets/Details';
 import { store } from '../../app/store/store';
 import { Provider } from 'react-redux';
@@ -26,7 +26,7 @@ export const renderWithSearchContext = (children: ReactNode) => {
   return { user, router };
 };
 
-export const arrangeProduct = (product: apiProductData) => {
+export const arrangeProduct = (product: ApiProductData) => {
   const user = userEvent.setup();
   const routes = [
     {

@@ -1,6 +1,6 @@
-import { apiProductData } from '../../shared/data/types';
+import { ApiProductData } from '../../shared/data/types';
 
-export const products: apiProductData[] = [
+export const products: ApiProductData[] = [
   {
     id: 1,
     title: 'iPhone 9 mock test',

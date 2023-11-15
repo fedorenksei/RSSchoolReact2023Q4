@@ -1,37 +1,19 @@
-import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { Api } from '../shared/external/api';
-import { ProductData } from '../shared/data/types';
 import { Product } from '../entities/Product';
+import { useGetProductByIdQuery } from '../shared/external/rtk-query';
 import { Loader } from '../shared/ui-kit/Loader';
 
 export const Details = () => {
   const { detailsId } = useParams();
-  const [response, setResponse] = useState<ProductData | null>(null);
-  const [hasError, setHasError] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    (async () => {
-      if (!detailsId) return;
-      setIsLoading(true);
-      try {
-        const api = Api.getInstance();
-        const response = await api.getProduct(detailsId);
-        setResponse(response);
-        setHasError(false);
-      } catch (err) {
-        setHasError(true);
-      }
-      setIsLoading(false);
-    })();
-  }, [detailsId]);
+  const { data, isError, isLoading, isFetching } = useGetProductByIdQuery(
+    detailsId as string
+  );
 
   let searchResults;
-  if (hasError) searchResults = <p>Something went wrong...</p>;
-  else if (!response || isLoading) searchResults = <Loader />;
+  if (isError) searchResults = <p>Something went wrong...</p>;
+  else if (!data || isLoading || isFetching) searchResults = <Loader />;
   else {
-    searchResults = <Product view="details" data={response} />;
+    searchResults = <Product view="details" data={data} />;
   }
 
   return (
