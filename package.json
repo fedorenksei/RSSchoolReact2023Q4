@@ -8,6 +8,7 @@
     "test": "vitest",
     "coverage": "vitest run --coverage",
     "build": "tsc && vite build",
+    "ts-watch": "tsc --watch --noEmit --project './tsconfig.json'",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "format:fix": "prettier --write .",
     "preview": "vite preview",
