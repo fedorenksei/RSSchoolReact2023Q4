@@ -1,8 +1,8 @@
 import { act, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
-import { SearchInput } from '../../features/Input';
+import { SearchInput } from '../../features/SearchInput';
 import { Limit } from '../../features/Limit';
-import { SearchResults } from '../../features/Results';
+import { SearchResults } from '../../features/SearchResults';
 import { DEFAULT_LIMIT } from '../../shared/data/constants';
 import { renderWithSearchContext } from './utils';
 

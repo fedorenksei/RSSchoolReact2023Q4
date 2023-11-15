@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest';
 import { renderWithSearchContext } from './utils';
-import { SearchInput } from '../../features/Input';
+import { SearchInput } from '../../features/SearchInput';
 import { screen } from '@testing-library/react';
 import { LS_ITEM_NAME } from '../../shared/data/constants';
 

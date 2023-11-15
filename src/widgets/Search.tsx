@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom';
-import { SearchInput } from '../features/Input';
+import { SearchInput } from '../features/SearchInput';
 import { Limit } from '../features/Limit';
 import { Pagination } from '../features/Pagination';
-import { SearchResults } from '../features/Results';
+import { SearchResults } from '../features/SearchResults';
 import { useSearchContext } from '../app/store/context';
 
 export const Search = () => {
