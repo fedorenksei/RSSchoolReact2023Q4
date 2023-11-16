@@ -2,9 +2,9 @@ import { useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../app/store/store';
-import { setSearchTerm } from './search-term-slice';
-import { usePage } from '../../shared/hooks';
 import { setSearchTermToLS } from '../../shared/external/localStorage';
+import { usePage } from '../Pagination/hook';
+import { setSearchTerm } from './search-term-slice';
 
 interface FormFields {
   searchTerm: string;

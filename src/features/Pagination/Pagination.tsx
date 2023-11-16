@@ -1,18 +1,12 @@
-import React from 'react';
-import { Button } from '../shared/ui-kit/Button';
-import { usePage } from '../shared/hooks';
-import { useSearchContext } from '../app/store/context';
 import { useSelector } from 'react-redux';
-import { RootState } from '../app/store/store';
+import { RootState } from '../../app/store/store';
+import { Button } from '../../shared/ui-kit/Button';
+import { usePage } from './hook';
 
 export const Pagination = () => {
   const [page, setPage] = usePage();
-  const { apiRequestStatus } = useSearchContext();
   const limit = useSelector((state: RootState) => state.limit.value);
-  const total =
-    apiRequestStatus && typeof apiRequestStatus === 'object'
-      ? apiRequestStatus.total
-      : 0;
+  const { total } = useSelector((state: RootState) => state.searchResults);
   const pages = Math.ceil(total / limit);
 
   return (

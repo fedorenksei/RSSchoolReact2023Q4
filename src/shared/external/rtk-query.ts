@@ -2,6 +2,20 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { BASE_URL } from '../data/constants';
 import { ApiProductData, ProductData } from '../data/types';
 
+interface SearchProductsResult {
+  total: number;
+  results: ProductData[];
+}
+interface SearchProductsParams {
+  searchTerm: string;
+  limit: number;
+  page: number;
+}
+interface ApiSearchProductsBody {
+  products: ApiProductData[];
+  total: number;
+}
+
 export const dummyJsonApi = createApi({
   reducerPath: 'dummyJsonApi',
   baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
@@ -15,7 +29,24 @@ export const dummyJsonApi = createApi({
         imageUrl: response.thumbnail,
       }),
     }),
+
+    searchProducts: builder.query<SearchProductsResult, SearchProductsParams>({
+      query: ({ searchTerm, limit, page }) =>
+        `products${
+          searchTerm ? `/search?q=${searchTerm}` : '?'
+        }&limit=${limit}&skip=${limit * (page - 1)}`,
+
+      transformResponse: ({ products, total }: ApiSearchProductsBody) => ({
+        results: products.map((data) => ({
+          id: '' + data.id,
+          name: data.title,
+          description: data.description,
+          imageUrl: data.thumbnail,
+        })),
+        total,
+      }),
+    }),
   }),
 });
 
-export const { useGetProductByIdQuery } = dummyJsonApi;
+export const { useGetProductByIdQuery, useSearchProductsQuery } = dummyJsonApi;

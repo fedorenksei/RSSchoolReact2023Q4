@@ -2,24 +2,19 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { ReactNode } from 'react';
 import { act } from 'react-dom/test-utils';
+import { Provider } from 'react-redux';
 import { Outlet, RouterProvider, createMemoryRouter } from 'react-router-dom';
-import { SearchContextProvider } from '../../app/providers/SearchContextProvider';
+import { store } from '../../app/store/store';
 import { Product } from '../../entities/Product';
 import { ApiProductData } from '../../shared/data/types';
 import { Details } from '../../widgets/Details';
-import { store } from '../../app/store/store';
-import { Provider } from 'react-redux';
 
 export const renderWithSearchContext = (children: ReactNode) => {
   const user = userEvent.setup();
   const router = createMemoryRouter([
     {
       path: '*',
-      element: (
-        <Provider store={store}>
-          <SearchContextProvider>{children}</SearchContextProvider>,
-        </Provider>
-      ),
+      element: <Provider store={store}>{children},</Provider>,
     },
   ]);
   render(<RouterProvider router={router} />);

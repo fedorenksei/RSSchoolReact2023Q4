@@ -1,9 +1,8 @@
-import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../app/store/store';
+import { usePage } from '../Pagination/hook';
 import { setLimit } from './limit-slice';
-import { usePage } from '../../shared/hooks';
 
 interface FormFields {
   limit: number;
