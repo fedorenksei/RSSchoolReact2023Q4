@@ -10,8 +10,11 @@ export const useSearchResults = () => {
   const [page] = usePage();
   const searchTerm = useSelector((state: RootState) => state.searchTerm.value);
   const limit = useSelector((state: RootState) => state.limit.value);
-  const { data, refetch, isLoading, isFetching, isError } =
-    useSearchProductsQuery({ searchTerm, limit, page });
+  const { data, refetch, isFetching, isError } = useSearchProductsQuery({
+    searchTerm,
+    limit,
+    page,
+  });
 
   useEffect(() => {
     refetch();
@@ -23,8 +26,8 @@ export const useSearchResults = () => {
   }, [data, dispatch]);
 
   useEffect(() => {
-    dispatch(setIsLoading(isLoading || isFetching));
-  }, [isLoading, isFetching, dispatch]);
+    dispatch(setIsLoading(isFetching));
+  }, [isFetching, dispatch]);
 
   useEffect(() => {
     dispatch(setIsError(isError));

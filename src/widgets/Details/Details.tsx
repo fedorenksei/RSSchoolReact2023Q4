@@ -9,17 +9,17 @@ import { setIsLoading } from './details-slice';
 export const Details = () => {
   const dispatch = useDispatch();
   const { detailsId } = useParams();
-  const { data, isError, isLoading, isFetching } = useGetProductByIdQuery(
+  const { data, isError, isFetching } = useGetProductByIdQuery(
     detailsId as string
   );
 
   useEffect(() => {
-    dispatch(setIsLoading(isLoading || isFetching));
-  }, [isLoading, isFetching, dispatch]);
+    dispatch(setIsLoading(isFetching));
+  }, [isFetching, dispatch]);
 
   let searchResults;
   if (isError) searchResults = <p>Something went wrong...</p>;
-  else if (!data || isLoading || isFetching) searchResults = <Loader />;
+  else if (!data || isFetching) searchResults = <Loader />;
   else {
     searchResults = <Product view="details" data={data} />;
   }
