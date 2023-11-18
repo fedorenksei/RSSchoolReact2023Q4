@@ -1,5 +1,5 @@
 import React, { MouseEventHandler } from 'react';
-import { ProductData } from '../shared/types';
+import { ProductData } from '../shared/data/types';
 import { useNavigate } from 'react-router-dom';
 
 interface Props {

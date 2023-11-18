@@ -5,14 +5,14 @@ export interface ProductData {
   imageUrl: string;
 }
 
-interface ok200ApiResponse {
+interface Ok200ApiResponse {
   total: number;
   results: ProductData[];
 }
 
-export type ApiRequestStatus = null | ok200ApiResponse | 'loading' | 'error';
+export type ApiRequestStatus = null | Ok200ApiResponse | 'loading' | 'error';
 
-export interface apiProductData {
+export interface ApiProductData {
   id: number;
   title: string;
   description: string;

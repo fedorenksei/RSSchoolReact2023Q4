@@ -1,17 +1,18 @@
+import { Provider } from 'react-redux';
 import { Outlet, RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { Home } from '../../pages/Home';
 import { NotFound } from '../../pages/NotFound';
 import { Details } from '../../widgets/Details';
-import { SearchContextProvider } from './SearchContextProvider';
+import { store } from '../store/store';
 import { ErrorBoundary } from './ErrorBoundary';
 
 export const appRoutes = [
   {
     element: (
       <ErrorBoundary>
-        <SearchContextProvider>
+        <Provider store={store}>
           <Outlet />
-        </SearchContextProvider>
+        </Provider>
       </ErrorBoundary>
     ),
     children: [

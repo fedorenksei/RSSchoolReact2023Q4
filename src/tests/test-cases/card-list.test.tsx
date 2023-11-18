@@ -1,14 +1,14 @@
 import { act, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
-import { SearchInput } from '../../features/Input';
+import { SearchInput } from '../../features/SearchInput';
 import { Limit } from '../../features/Limit';
-import { SearchResults } from '../../features/Results';
-import { DEFAULT_LIMIT } from '../../shared/constants';
-import { renderWithSearchContext } from './utils';
+import { SearchResults } from '../../features/SearchResults';
+import { DEFAULT_LIMIT } from '../../shared/data/constants';
+import { renderWithStore } from './utils';
 
 describe('Card List', () => {
   it('5.1: renders the specified number of cards', async () => {
-    const { user } = renderWithSearchContext(
+    const { user } = renderWithStore(
       <>
         <Limit />
         <SearchResults />
@@ -28,7 +28,7 @@ describe('Card List', () => {
   });
 
   it('5.2: an appropriate message is displayed if no cards are present', async () => {
-    const { user } = renderWithSearchContext(
+    const { user } = renderWithStore(
       <>
         <SearchInput />
         <SearchResults />

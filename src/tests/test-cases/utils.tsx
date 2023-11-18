@@ -2,31 +2,34 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { ReactNode } from 'react';
 import { act } from 'react-dom/test-utils';
+import { Provider } from 'react-redux';
 import { Outlet, RouterProvider, createMemoryRouter } from 'react-router-dom';
-import { SearchContextProvider } from '../../app/providers/SearchContextProvider';
+import { configureAppStore } from '../../app/store/store';
 import { Product } from '../../entities/Product';
-import { apiProductData } from '../../shared/types';
+import { ApiProductData } from '../../shared/data/types';
 import { Details } from '../../widgets/Details';
 
-export const renderWithSearchContext = (children: ReactNode) => {
+export const renderWithStore = (children: ReactNode) => {
   const user = userEvent.setup();
+  const store = configureAppStore();
   const router = createMemoryRouter([
     {
       path: '*',
-      element: <SearchContextProvider>{children}</SearchContextProvider>,
+      element: <Provider store={store}>{children}</Provider>,
     },
   ]);
   render(<RouterProvider router={router} />);
   return { user, router };
 };
 
-export const arrangeProduct = (product: apiProductData) => {
+export const arrangeProduct = (product: ApiProductData) => {
   const user = userEvent.setup();
+  const store = configureAppStore();
   const routes = [
     {
-      path: '/',
+      path: '*',
       element: (
-        <div>
+        <Provider store={store}>
           <Product
             view="card"
             data={{
@@ -37,7 +40,7 @@ export const arrangeProduct = (product: apiProductData) => {
             }}
           />
           <Outlet />
-        </div>
+        </Provider>
       ),
       children: [
         {

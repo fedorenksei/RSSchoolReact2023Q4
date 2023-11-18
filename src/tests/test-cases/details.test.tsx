@@ -3,8 +3,10 @@ import {
   screen,
   waitForElementToBeRemoved,
 } from '@testing-library/react';
-import { RouterProvider, createMemoryRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { Outlet, RouterProvider, createMemoryRouter } from 'react-router-dom';
 import { describe, expect, test } from 'vitest';
+import { configureAppStore } from '../../app/store/store';
 import { Details } from '../../widgets/Details';
 import { products } from '../server/mock-data';
 import { arrangeProduct } from './utils';
@@ -24,8 +26,19 @@ describe('Details', () => {
 
   test('7.2: Detailed card component correctly displays the detailed card data', async () => {
     const product = products[0];
+    const store = configureAppStore();
     const router = createMemoryRouter(
-      [{ element: <Details />, path: '/details/:detailsId' }],
+      [
+        {
+          path: '/',
+          element: (
+            <Provider store={store}>
+              <Outlet />
+            </Provider>
+          ),
+          children: [{ element: <Details />, path: '/details/:detailsId' }],
+        },
+      ],
       {
         initialEntries: [`/details/${product.id}`],
       }
