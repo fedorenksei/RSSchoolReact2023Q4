@@ -1,17 +1,14 @@
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { RootState } from '../../app/store/store';
 import { Limit } from '../../features/Limit';
 import { Pagination } from '../../features/Pagination';
 import { SearchInput } from '../../features/SearchInput';
 import { SearchResults } from '../../features/SearchResults';
-import { useSearchResults } from './hook';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../app/store/store';
 
 export const Search = () => {
   const navigate = useNavigate();
   const { total } = useSelector((state: RootState) => state.searchResults);
-
-  useSearchResults();
 
   return (
     <div

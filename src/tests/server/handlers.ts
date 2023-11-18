@@ -21,6 +21,7 @@ const searchResponder: ResponseResolver = async ({ request }) => {
 const detailsResponder: ResponseResolver<
   HttpRequestResolverExtras<{ detailsId: string }>
 > = async ({ params }) => {
+  console.log('DETAILS HANDLER');
   const { detailsId } = params;
   const product = products.filter((p) => p.id === +detailsId)[0];
   if (!product) throw new Error('wrong value of detailsId path parameter');
@@ -31,5 +32,5 @@ const detailsResponder: ResponseResolver<
 export const handlers = [
   http.get(`${BASE_URL}products`, searchResponder),
   http.get(`${BASE_URL}products/search`, searchResponder),
-  http.get(`${BASE_URL}products/:detailsId`, detailsResponder),
+  http.get(`${BASE_URL}product/:detailsId`, detailsResponder),
 ];
