@@ -11,7 +11,6 @@ import { Details } from '../../widgets/Details';
 
 export const renderWithStore = (children: ReactNode) => {
   const user = userEvent.setup();
-  console.log('renderWithSearchContext');
   const store = configureAppStore();
   const router = createMemoryRouter([
     {

@@ -21,7 +21,6 @@ const searchResponder: ResponseResolver = async ({ request }) => {
 const detailsResponder: ResponseResolver<
   HttpRequestResolverExtras<{ detailsId: string }>
 > = async ({ params }) => {
-  console.log('DETAILS HANDLER');
   const { detailsId } = params;
   const product = products.filter((p) => p.id === +detailsId)[0];
   if (!product) throw new Error('wrong value of detailsId path parameter');
