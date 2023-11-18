@@ -17,7 +17,7 @@ const initialState: State = {
 };
 
 export const searchResultsSlice = createSlice({
-  name: 'searchTerm',
+  name: 'search',
   initialState,
   reducers: {
     setData: (state, action: PayloadAction<ProductData[]>) => {

@@ -10,7 +10,7 @@ const initialState: State = {
 };
 
 export const productDetailsSlice = createSlice({
-  name: 'searchTerm',
+  name: 'details',
   initialState,
   reducers: {
     setIsLoading: (state, action: PayloadAction<boolean>) => {
