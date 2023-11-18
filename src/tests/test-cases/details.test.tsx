@@ -3,13 +3,13 @@ import {
   screen,
   waitForElementToBeRemoved,
 } from '@testing-library/react';
+import { Provider } from 'react-redux';
 import { Outlet, RouterProvider, createMemoryRouter } from 'react-router-dom';
 import { describe, expect, test } from 'vitest';
+import { configureAppStore } from '../../app/store/store';
 import { Details } from '../../widgets/Details';
 import { products } from '../server/mock-data';
-import { SearchResultsUsage, arrangeProduct } from './utils';
-import { Provider } from 'react-redux';
-import { configureAppStore } from '../../app/store/store';
+import { arrangeProduct } from './utils';
 
 describe('Details', () => {
   test('7.1: loading indicator is displayed while fetching data', async () => {
@@ -33,9 +33,7 @@ describe('Details', () => {
           path: '/',
           element: (
             <Provider store={store}>
-              <SearchResultsUsage>
-                <Outlet />
-              </SearchResultsUsage>
+              <Outlet />
             </Provider>
           ),
           children: [{ element: <Details />, path: '/details/:detailsId' }],

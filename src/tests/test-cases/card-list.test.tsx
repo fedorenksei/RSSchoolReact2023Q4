@@ -4,11 +4,11 @@ import { SearchInput } from '../../features/SearchInput';
 import { Limit } from '../../features/Limit';
 import { SearchResults } from '../../features/SearchResults';
 import { DEFAULT_LIMIT } from '../../shared/data/constants';
-import { renderWithSearchContext } from './utils';
+import { renderWithStore } from './utils';
 
 describe('Card List', () => {
   it('5.1: renders the specified number of cards', async () => {
-    const { user } = renderWithSearchContext(
+    const { user } = renderWithStore(
       <>
         <Limit />
         <SearchResults />
@@ -28,7 +28,7 @@ describe('Card List', () => {
   });
 
   it('5.2: an appropriate message is displayed if no cards are present', async () => {
-    const { user } = renderWithSearchContext(
+    const { user } = renderWithStore(
       <>
         <SearchInput />
         <SearchResults />

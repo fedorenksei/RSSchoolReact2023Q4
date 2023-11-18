@@ -1,20 +1,17 @@
+import { Provider } from 'react-redux';
 import { Outlet, RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { Home } from '../../pages/Home';
 import { NotFound } from '../../pages/NotFound';
 import { Details } from '../../widgets/Details';
-import { ErrorBoundary } from './ErrorBoundary';
-import { StoreManagement } from './StoreManagement';
-import { Provider } from 'react-redux';
 import { store } from '../store/store';
+import { ErrorBoundary } from './ErrorBoundary';
 
 export const appRoutes = [
   {
     element: (
       <ErrorBoundary>
         <Provider store={store}>
-          <StoreManagement>
-            <Outlet />
-          </StoreManagement>
+          <Outlet />
         </Provider>
       </ErrorBoundary>
     ),

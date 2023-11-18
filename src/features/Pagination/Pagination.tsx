@@ -2,11 +2,13 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../app/store/store';
 import { Button } from '../../shared/ui-kit/Button';
 import { usePage } from './hook';
+import { useSearchResults } from '../../widgets/Search/hook';
 
 export const Pagination = () => {
   const [page, setPage] = usePage();
   const limit = useSelector((state: RootState) => state.limit.value);
-  const { total } = useSelector((state: RootState) => state.searchResults);
+  const { data } = useSearchResults();
+  const total = data?.total || 0;
   const pages = Math.ceil(total / limit);
 
   return (

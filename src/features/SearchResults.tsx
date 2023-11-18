@@ -2,23 +2,25 @@ import { Loader } from '../shared/ui-kit/Loader';
 import { Product } from '../entities/Product';
 import { useSelector } from 'react-redux';
 import { RootState } from '../app/store/store';
+import { useSearchResults } from '../widgets/Search/hook';
 
 export const SearchResults = () => {
-  const { data, isLoading, isError } = useSelector(
+  const { isLoading, isError } = useSelector(
     (state: RootState) => state.searchResults
   );
+  const { data } = useSearchResults();
 
   let searchResults;
   if (isError) {
     searchResults = <p>Something went wrong...</p>;
-  } else if (isLoading) {
+  } else if (!data || isLoading) {
     searchResults = <Loader />;
-  } else if (!data.length) {
+  } else if (!data.results.length) {
     searchResults = <p>Have not found anything...</p>;
   } else {
     searchResults = (
       <div>
-        {data.map((product) => (
+        {data.results.map((product) => (
           <Product key={product.id} view="card" data={product} />
         ))}
       </div>

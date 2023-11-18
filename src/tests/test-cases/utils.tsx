@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { PropsWithChildren, ReactNode } from 'react';
+import { ReactNode } from 'react';
 import { act } from 'react-dom/test-utils';
 import { Provider } from 'react-redux';
 import { Outlet, RouterProvider, createMemoryRouter } from 'react-router-dom';
@@ -8,25 +8,15 @@ import { configureAppStore } from '../../app/store/store';
 import { Product } from '../../entities/Product';
 import { ApiProductData } from '../../shared/data/types';
 import { Details } from '../../widgets/Details';
-import { useSearchResults } from '../../widgets/Search/hook';
 
-export const SearchResultsUsage = ({ children }: PropsWithChildren) => {
-  useSearchResults();
-  return <>{children}</>;
-};
-
-export const renderWithSearchContext = (children: ReactNode) => {
+export const renderWithStore = (children: ReactNode) => {
   const user = userEvent.setup();
   console.log('renderWithSearchContext');
   const store = configureAppStore();
   const router = createMemoryRouter([
     {
       path: '*',
-      element: (
-        <Provider store={store}>
-          <SearchResultsUsage>{children}</SearchResultsUsage>
-        </Provider>
-      ),
+      element: <Provider store={store}>{children}</Provider>,
     },
   ]);
   render(<RouterProvider router={router} />);
@@ -38,21 +28,19 @@ export const arrangeProduct = (product: ApiProductData) => {
   const store = configureAppStore();
   const routes = [
     {
-      path: '/',
+      path: '*',
       element: (
         <Provider store={store}>
-          <SearchResultsUsage>
-            <Product
-              view="card"
-              data={{
-                id: '' + product.id,
-                name: product.title,
-                imageUrl: product.thumbnail,
-                description: product.description,
-              }}
-            />
-            <Outlet />
-          </SearchResultsUsage>
+          <Product
+            view="card"
+            data={{
+              id: '' + product.id,
+              name: product.title,
+              imageUrl: product.thumbnail,
+              description: product.description,
+            }}
+          />
+          <Outlet />
         </Provider>
       ),
       children: [

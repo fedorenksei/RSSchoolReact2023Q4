@@ -1,11 +1,11 @@
 import { describe, expect, test } from 'vitest';
 import { Pagination } from '../../features/Pagination';
-import { renderWithSearchContext } from './utils';
+import { renderWithStore } from './utils';
 import { screen } from '@testing-library/react';
 
 describe('Pagination', () => {
   test('component updates URL query parameter when page changes', async () => {
-    const { user, router } = renderWithSearchContext(<Pagination />);
+    const { user, router } = renderWithStore(<Pagination />);
 
     expect(getPageParam()).toBeNull();
 
