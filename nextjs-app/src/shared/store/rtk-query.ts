@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { BASE_URL } from "../data/constants";
 import { ApiProductData, ProductData } from "../data/types";
+// import { HYDRATE } from "next-redux-wrapper";
 
 interface SearchProductsResult {
   total: number;
@@ -19,6 +20,11 @@ interface ApiSearchProductsBody {
 export const dummyJsonApi = createApi({
   reducerPath: "dummyJsonApi",
   baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
+  // extractRehydrationInfo(action, { reducerPath }) {
+  //   if (action.type === HYDRATE) {
+  //     return action.payload[reducerPath];
+  //   }
+  // },
   endpoints: (builder) => ({
     getProductById: builder.query<ProductData, string>({
       query: (id) => `product/${id}`,
