@@ -1,9 +1,8 @@
-import React, { MouseEventHandler } from "react";
-import Image from "next/image";
 import { ProductData } from "@/shared/data/types";
-import { useRouter } from "next/router";
-import Link from "next/link";
 import { getQueryParams } from "@/shared/utils";
+import Image from "next/image";
+import { useRouter } from "next/router";
+import { MouseEventHandler } from "react";
 
 interface Props {
   data: ProductData;
@@ -41,14 +40,20 @@ export const ProductUI = ({
 export const Product = (props: Props) => {
   const { view, data } = props;
   const router = useRouter();
+  const openDetails: MouseEventHandler<HTMLDivElement> = (e) => {
+    router.push(`/details/${data.id}${getQueryParams(router)}`, undefined, {
+      scroll: false,
+    });
+    e.stopPropagation();
+  };
 
   return view === "card" ? (
-    <Link
-      href={`details/${data.id}${getQueryParams(router)}`}
+    <div
+      onClick={openDetails}
       className="cursor-pointer hover:shadow-lg hover:bg-blue-100 transition"
     >
       <ProductUI {...props} />
-    </Link>
+    </div>
   ) : (
     <ProductUI {...props} />
   );

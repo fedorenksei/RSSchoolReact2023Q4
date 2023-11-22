@@ -1,3 +1,14 @@
+import { ProductData } from "@/shared/data/types";
+import { getProducts } from "@/shared/utils";
+import { GetServerSideProps } from "next";
+
+export const getServerSideProps: GetServerSideProps<{
+  results: ProductData[];
+  total: number;
+}> = async (context) => {
+  return { props: await getProducts(context) };
+};
+
 export default function Home() {
-  return <main></main>;
+  return <div></div>;
 }
