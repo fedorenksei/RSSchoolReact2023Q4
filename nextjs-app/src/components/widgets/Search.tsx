@@ -24,7 +24,7 @@ export const Search = ({
         <div className="flex flex-col gap-4 items-center">
           <div className="self-stretch flex justify-between gap-5 flex-wrap items-center">
             <p>Total: {total}</p>
-            {/* <Limit /> */}
+            <Limit />
           </div>
           {/* <Pagination /> */}
         </div>
