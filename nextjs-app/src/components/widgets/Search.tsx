@@ -1,11 +1,11 @@
 import { useRouter } from "next/router";
-import { Limit } from "../features/Limit";
-import { Pagination } from "../features/Pagination";
 import { InferGetServerSidePropsType } from "next";
 import { getServerSideProps } from "@/pages";
 import { getQueryParams } from "@/shared/utils";
 import { SearchResults } from "@/components/features/SearchResults";
 import { SearchInput } from "@/components/features/SearchInput";
+import { Limit } from "../features/Limit";
+import { Pagination } from "../features/Pagination";
 
 export const Search = ({
   results,
@@ -26,7 +26,7 @@ export const Search = ({
             <p>Total: {total}</p>
             <Limit />
           </div>
-          {/* <Pagination /> */}
+          <Pagination total={total} />
         </div>
       )}
       <SearchResults results={results} />
