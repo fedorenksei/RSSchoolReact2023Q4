@@ -1,9 +1,8 @@
 import { GetServerSidePropsContext } from 'next';
 import { NextRouter } from 'next/router';
-import { BASE_URL, DEFAULT_LIMIT } from './data/constants';
-import { ProductData } from './data/types';
-import { store } from './store/store';
+import { DEFAULT_LIMIT } from './data/constants';
 import { dummyJsonApi } from './store/rtk-query';
+import { store } from './store/store';
 
 export const getQueryParams = (router: NextRouter) => {
   const questionPos = router.asPath.indexOf('?');

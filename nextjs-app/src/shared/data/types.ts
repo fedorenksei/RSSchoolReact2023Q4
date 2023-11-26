@@ -5,11 +5,6 @@ export interface ProductData {
   imageUrl: string;
 }
 
-interface Ok200ApiResponse {
-  total: number;
-  results: ProductData[];
-}
-
 export interface ApiProductData {
   id: number;
   title: string;

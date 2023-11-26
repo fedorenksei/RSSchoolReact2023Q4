@@ -1,8 +1,7 @@
+import { DEFAULT_LIMIT } from '@/shared/data/constants';
+import { getQueryParams, getStringQueryParam } from '@/shared/utils';
 import { useRouter } from 'next/router';
 import { Button } from '../../shared/ui-kit/Button';
-import { getQueryParams, getStringQueryParam } from '@/shared/utils';
-import { DEFAULT_LIMIT } from '@/shared/data/constants';
-import { ProductData } from '@/shared/data/types';
 
 export const Pagination = ({ total }: { total: number }) => {
   const router = useRouter();

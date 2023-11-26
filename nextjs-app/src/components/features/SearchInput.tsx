@@ -2,14 +2,12 @@ import { getQueryParams, getStringQueryParam } from '@/shared/utils';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
 
 interface FormFields {
   searchTerm: string;
 }
 
 export const SearchInput = () => {
-  const dispatch = useDispatch();
   const router = useRouter();
   const { register, handleSubmit, setFocus } = useForm<FormFields>({
     defaultValues: {
