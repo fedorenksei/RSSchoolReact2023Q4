@@ -3,8 +3,8 @@ import { getProducts } from "@/shared/utils";
 import { GetServerSideProps } from "next";
 
 export const getServerSideProps: GetServerSideProps<{
-  results: ProductData[];
-  total: number;
+  results: ProductData[] | undefined;
+  total: number | undefined;
 }> = async (context) => {
   return { props: await getProducts(context) };
 };

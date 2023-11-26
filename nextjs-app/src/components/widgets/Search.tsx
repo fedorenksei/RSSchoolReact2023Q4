@@ -20,16 +20,20 @@ export const Search = ({
     >
       <h1 className="text-3xl">Search for Products of DummyJSON</h1>
       <SearchInput />
-      {results && (
-        <div className="flex flex-col gap-4 items-center">
-          <div className="self-stretch flex justify-between gap-5 flex-wrap items-center">
-            <p>Total: {total}</p>
-            <Limit />
+      {results && total ? (
+        <>
+          <div className="flex flex-col gap-4 items-center">
+            <div className="self-stretch flex justify-between gap-5 flex-wrap items-center">
+              <p>Total: {total}</p>
+              <Limit />
+            </div>
+            <Pagination total={total} />
           </div>
-          <Pagination total={total} />
-        </div>
+          <SearchResults results={results} />
+        </>
+      ) : (
+        <p>Something went wrong...</p>
       )}
-      <SearchResults results={results} />
     </div>
   );
 };

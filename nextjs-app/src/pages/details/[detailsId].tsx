@@ -1,7 +1,7 @@
 import { Product } from "@/components/entities/Product";
-import { Search } from "@/components/widgets/Search";
-import { BASE_URL } from "@/shared/data/constants";
 import { ProductData } from "@/shared/data/types";
+import { dummyJsonApi } from "@/shared/store/rtk-query";
+import { store } from "@/shared/store/store";
 import {
   getProducts,
   getQueryParams,
@@ -10,61 +10,26 @@ import {
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useDispatch } from "react-redux";
 
 export const getServerSideProps: GetServerSideProps<{
-  details: ProductData;
-  results: ProductData[];
-  total: number;
+  details: ProductData | undefined;
+  results: ProductData[] | undefined;
+  total: number | undefined;
 }> = async (context) => {
   const detailsId = getStringQueryParam("detailsId", context);
 
-  // store.dispatch(dummyJsonApi.endpoints.getProductById.initiate("1"));
-  // await Promise.all(store.dispatch(dummyJsonApi.util.getRunningQueriesThunk()));
+  const result = await store.dispatch(
+    dummyJsonApi.endpoints.getProductById.initiate(detailsId || "")
+  );
 
-  const response = await fetch(`${BASE_URL}products/${detailsId}`);
-  if (!response.ok) {
-    throw new Error("Response's status is not 200 OK");
-  }
-  const data: {
-    id: string;
-    title: string;
-    description: string;
-    thumbnail: string;
-  } = await response.json();
-  const res = {
-    id: data.id,
-    name: data.title,
-    description: data.description,
-    imageUrl: data.thumbnail,
-  };
-
-  return { props: { details: res, ...(await getProducts(context)) } };
+  return { props: { details: result.data, ...(await getProducts(context)) } };
 };
 
 export default function Details(
   props: InferGetServerSidePropsType<typeof getServerSideProps>
 ) {
   const { details } = props;
-  const dispatch = useDispatch();
   const router = useRouter();
-
-  // let { detailsId } = router.query;
-  // if (Array.isArray(detailsId)) detailsId = detailsId[0]; // TODO: figure out how to remove
-  // const { data, isError, isFetching } = useGetProductByIdQuery(
-  //   detailsId || skipToken
-  // );
-
-  // useEffect(() => {
-  //   dispatch(setIsLoading(isFetching));
-  // }, [isFetching, dispatch]);
-
-  let searchResults;
-  // if (isError) searchResults = <p>Something went wrong...</p>;
-  // else if (!data || isFetching) searchResults = <Loader />;
-  // else {
-  // }
-  searchResults = <Product view="details" data={details} />;
 
   return (
     <>
@@ -75,7 +40,13 @@ export default function Details(
         >
           Close
         </Link>
-        <div className="grow grid place-items-center">{searchResults}</div>
+        <div className="grow grid place-items-center">
+          {details ? (
+            <Product view="details" data={details} />
+          ) : (
+            <p>Something went wrong...</p>
+          )}
+        </div>
       </div>
     </>
   );
