@@ -1,5 +1,5 @@
 import { ProductData } from '@/shared/data/types';
-import { getProducts } from '@/shared/utils';
+import { getProducts } from '@/shared/getProducts';
 import { GetServerSideProps } from 'next';
 
 export const getServerSideProps: GetServerSideProps<{
@@ -12,3 +12,5 @@ export const getServerSideProps: GetServerSideProps<{
 export default function Home() {
   return <div></div>;
 }
+
+Home.withSearch = true;

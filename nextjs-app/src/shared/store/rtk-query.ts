@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { BASE_URL } from '../data/constants';
 import { ApiProductData, ProductData } from '../data/types';
+import { transformApiProductData } from '../utils';
 
 interface SearchProductsResult {
   total: number;
@@ -22,12 +23,7 @@ export const dummyJsonApi = createApi({
   endpoints: (builder) => ({
     getProductById: builder.query<ProductData, string>({
       query: (id) => `product/${id}`,
-      transformResponse: (response: ApiProductData) => ({
-        id: '' + response.id,
-        name: response.title,
-        description: response.description,
-        imageUrl: response.thumbnail,
-      }),
+      transformResponse: transformApiProductData,
     }),
 
     searchProducts: builder.query<SearchProductsResult, SearchProductsParams>({
@@ -37,12 +33,7 @@ export const dummyJsonApi = createApi({
         }&limit=${limit}&skip=${limit * (page - 1)}`,
 
       transformResponse: ({ products, total }: ApiSearchProductsBody) => ({
-        results: products.map((data) => ({
-          id: '' + data.id,
-          name: data.title,
-          description: data.description,
-          imageUrl: data.thumbnail,
-        })),
+        results: products.map(transformApiProductData),
         total,
       }),
     }),

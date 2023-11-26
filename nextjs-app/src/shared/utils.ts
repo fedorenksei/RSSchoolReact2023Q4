@@ -1,8 +1,6 @@
 import { GetServerSidePropsContext } from 'next';
 import { NextRouter } from 'next/router';
-import { DEFAULT_LIMIT } from './data/constants';
-import { dummyJsonApi } from './store/rtk-query';
-import { store } from './store/store';
+import { ApiProductData, ProductData } from './data/types';
 
 export const getQueryParams = (router: NextRouter) => {
   const questionPos = router.asPath.indexOf('?');
@@ -17,16 +15,11 @@ export const getStringQueryParam = (
   return Array.isArray(urlValue) ? urlValue[0] : urlValue;
 };
 
-export const getProducts = async (context: GetServerSidePropsContext) => {
-  const searchTerm = getStringQueryParam('searchTerm', context) || '';
-  const limit = getStringQueryParam('limit', context) || `${DEFAULT_LIMIT}`;
-  const page = getStringQueryParam('page', context) || '1';
-  const result = await store.dispatch(
-    dummyJsonApi.endpoints.searchProducts.initiate({
-      searchTerm,
-      limit: +limit,
-      page: +page,
-    })
-  );
-  return { results: result.data?.results, total: result.data?.total };
-};
+export const transformApiProductData = (
+  response: ApiProductData
+): ProductData => ({
+  id: '' + response.id,
+  name: response.title,
+  description: response.description,
+  imageUrl: response.thumbnail,
+});

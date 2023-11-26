@@ -1,3 +1,7 @@
+import { NextPage } from 'next';
+import { AppProps } from 'next/app';
+import { ReactElement, ReactNode } from 'react';
+
 export interface ProductData {
   id: string;
   name: string;
@@ -18,3 +22,11 @@ export interface ApiProductData {
   thumbnail: string;
   images: string[];
 }
+
+type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
+  withSearch: boolean;
+};
+
+export type AppPropsWithLayout = AppProps & {
+  Component: NextPageWithLayout;
+};
