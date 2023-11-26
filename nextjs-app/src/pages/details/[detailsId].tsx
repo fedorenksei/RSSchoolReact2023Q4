@@ -1,25 +1,25 @@
-import { Product } from "@/components/entities/Product";
-import { ProductData } from "@/shared/data/types";
-import { dummyJsonApi } from "@/shared/store/rtk-query";
-import { store } from "@/shared/store/store";
+import { Product } from '@/components/entities/Product';
+import { ProductData } from '@/shared/data/types';
+import { dummyJsonApi } from '@/shared/store/rtk-query';
+import { store } from '@/shared/store/store';
 import {
   getProducts,
   getQueryParams,
   getStringQueryParam,
-} from "@/shared/utils";
-import { GetServerSideProps, InferGetServerSidePropsType } from "next";
-import Link from "next/link";
-import { useRouter } from "next/router";
+} from '@/shared/utils';
+import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 export const getServerSideProps: GetServerSideProps<{
   details: ProductData | undefined;
   results: ProductData[] | undefined;
   total: number | undefined;
 }> = async (context) => {
-  const detailsId = getStringQueryParam("detailsId", context);
+  const detailsId = getStringQueryParam('detailsId', context);
 
   const result = await store.dispatch(
-    dummyJsonApi.endpoints.getProductById.initiate(detailsId || "")
+    dummyJsonApi.endpoints.getProductById.initiate(detailsId || '')
   );
 
   return { props: { details: result.data, ...(await getProducts(context)) } };

@@ -1,11 +1,11 @@
-import { useRouter } from "next/router";
-import { InferGetServerSidePropsType } from "next";
-import { getServerSideProps } from "@/pages";
-import { getQueryParams } from "@/shared/utils";
-import { SearchResults } from "@/components/features/SearchResults";
-import { SearchInput } from "@/components/features/SearchInput";
-import { Limit } from "../features/Limit";
-import { Pagination } from "../features/Pagination";
+import { useRouter } from 'next/router';
+import { InferGetServerSidePropsType } from 'next';
+import { getServerSideProps } from '@/pages';
+import { getQueryParams } from '@/shared/utils';
+import { SearchResults } from '@/components/features/SearchResults';
+import { SearchInput } from '@/components/features/SearchInput';
+import { Limit } from '../features/Limit';
+import { Pagination } from '../features/Pagination';
 
 export const Search = ({
   results,

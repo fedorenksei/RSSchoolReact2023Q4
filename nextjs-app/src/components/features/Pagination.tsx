@@ -1,18 +1,18 @@
-import { useRouter } from "next/router";
-import { Button } from "../../shared/ui-kit/Button";
-import { getQueryParams, getStringQueryParam } from "@/shared/utils";
-import { DEFAULT_LIMIT } from "@/shared/data/constants";
-import { ProductData } from "@/shared/data/types";
+import { useRouter } from 'next/router';
+import { Button } from '../../shared/ui-kit/Button';
+import { getQueryParams, getStringQueryParam } from '@/shared/utils';
+import { DEFAULT_LIMIT } from '@/shared/data/constants';
+import { ProductData } from '@/shared/data/types';
 
 export const Pagination = ({ total }: { total: number }) => {
   const router = useRouter();
-  const limit = getStringQueryParam("limit", router) || DEFAULT_LIMIT;
-  const page = +(getStringQueryParam("page", router) || 1);
+  const limit = getStringQueryParam('limit', router) || DEFAULT_LIMIT;
+  const page = +(getStringQueryParam('page', router) || 1);
   const pages = Math.ceil(total / +limit);
   const setPage = (action: number | ((n: number) => number)) => {
-    const newPage = typeof action === "number" ? action : action(page);
+    const newPage = typeof action === 'number' ? action : action(page);
     const params = new URLSearchParams(getQueryParams(router));
-    params.set("page", `${newPage}`);
+    params.set('page', `${newPage}`);
     router.push(`/?${params.toString()}`);
   };
 

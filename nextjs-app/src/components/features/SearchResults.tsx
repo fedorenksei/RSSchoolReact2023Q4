@@ -1,6 +1,6 @@
-import { ProductData } from "@/shared/data/types";
-import { Loader } from "@/shared/ui-kit/Loader";
-import { Product } from "../entities/Product";
+import { ProductData } from '@/shared/data/types';
+import { Loader } from '@/shared/ui-kit/Loader';
+import { Product } from '../entities/Product';
 
 export const SearchResults = ({ results }: { results: ProductData[] }) => {
   // const { isLoading, isError } = useSelector(

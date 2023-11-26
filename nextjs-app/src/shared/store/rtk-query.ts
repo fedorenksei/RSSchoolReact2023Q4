@@ -1,6 +1,6 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { BASE_URL } from "../data/constants";
-import { ApiProductData, ProductData } from "../data/types";
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { BASE_URL } from '../data/constants';
+import { ApiProductData, ProductData } from '../data/types';
 
 interface SearchProductsResult {
   total: number;
@@ -17,13 +17,13 @@ interface ApiSearchProductsBody {
 }
 
 export const dummyJsonApi = createApi({
-  reducerPath: "dummyJsonApi",
+  reducerPath: 'dummyJsonApi',
   baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
   endpoints: (builder) => ({
     getProductById: builder.query<ProductData, string>({
       query: (id) => `product/${id}`,
       transformResponse: (response: ApiProductData) => ({
-        id: "" + response.id,
+        id: '' + response.id,
         name: response.title,
         description: response.description,
         imageUrl: response.thumbnail,
@@ -33,12 +33,12 @@ export const dummyJsonApi = createApi({
     searchProducts: builder.query<SearchProductsResult, SearchProductsParams>({
       query: ({ searchTerm, limit, page }) =>
         `products${
-          searchTerm ? `/search?q=${searchTerm}` : "?"
+          searchTerm ? `/search?q=${searchTerm}` : '?'
         }&limit=${limit}&skip=${limit * (page - 1)}`,
 
       transformResponse: ({ products, total }: ApiSearchProductsBody) => ({
         results: products.map((data) => ({
-          id: "" + data.id,
+          id: '' + data.id,
           name: data.title,
           description: data.description,
           imageUrl: data.thumbnail,

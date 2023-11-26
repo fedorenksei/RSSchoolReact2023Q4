@@ -1,24 +1,24 @@
-import { DEFAULT_LIMIT } from "@/shared/data/constants";
-import { getQueryParams, getStringQueryParam } from "@/shared/utils";
-import { useRouter } from "next/router";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { DEFAULT_LIMIT } from '@/shared/data/constants';
+import { getQueryParams, getStringQueryParam } from '@/shared/utils';
+import { useRouter } from 'next/router';
+import { SubmitHandler, useForm } from 'react-hook-form';
 interface FormFields {
   limit: number;
 }
 
 export const Limit = () => {
   const router = useRouter();
-  const initLimit = getStringQueryParam("limit", router) || `${DEFAULT_LIMIT}`;
+  const initLimit = getStringQueryParam('limit', router) || `${DEFAULT_LIMIT}`;
 
   const { register, handleSubmit } = useForm<FormFields>({
-    mode: "onChange",
+    mode: 'onChange',
     defaultValues: { limit: +initLimit },
   });
 
   const onSubmit: SubmitHandler<FormFields> = ({ limit }) => {
     const params = new URLSearchParams(getQueryParams(router));
-    limit ? params.set("limit", `${limit}`) : params.delete("limit");
-    params.set("page", "1");
+    limit ? params.set('limit', `${limit}`) : params.delete('limit');
+    params.set('page', '1');
     router.push(`/?${params.toString()}`);
   };
 
@@ -33,7 +33,7 @@ export const Limit = () => {
           type="number"
           min={1}
           max={100}
-          {...register("limit")}
+          {...register('limit')}
           className="border rounded-sm"
         />
       </label>

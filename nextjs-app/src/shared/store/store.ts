@@ -1,5 +1,5 @@
-import { configureStore } from "@reduxjs/toolkit";
-import { dummyJsonApi } from "./rtk-query";
+import { configureStore } from '@reduxjs/toolkit';
+import { dummyJsonApi } from './rtk-query';
 
 export const configureAppStore = () => {
   return configureStore({

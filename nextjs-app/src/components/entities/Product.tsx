@@ -1,12 +1,12 @@
-import { ProductData } from "@/shared/data/types";
-import { getQueryParams } from "@/shared/utils";
-import Image from "next/image";
-import { useRouter } from "next/router";
-import { MouseEventHandler } from "react";
+import { ProductData } from '@/shared/data/types';
+import { getQueryParams } from '@/shared/utils';
+import Image from 'next/image';
+import { useRouter } from 'next/router';
+import { MouseEventHandler } from 'react';
 
 interface Props {
   data: ProductData;
-  view: "card" | "details";
+  view: 'card' | 'details';
 }
 
 export const ProductUI = ({
@@ -16,9 +16,9 @@ export const ProductUI = ({
   return (
     <div
       className={
-        view === "card"
-          ? "p-5 flex gap-3"
-          : "h-full p-3 flex flex-col gap-4 items-start justify-center"
+        view === 'card'
+          ? 'p-5 flex gap-3'
+          : 'h-full p-3 flex flex-col gap-4 items-start justify-center'
       }
     >
       <Image
@@ -47,7 +47,7 @@ export const Product = (props: Props) => {
     e.stopPropagation();
   };
 
-  return view === "card" ? (
+  return view === 'card' ? (
     <div
       onClick={openDetails}
       className="cursor-pointer hover:shadow-lg hover:bg-blue-100 transition"
