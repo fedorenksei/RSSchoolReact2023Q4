@@ -14,12 +14,12 @@ export const DetailsUI = ({
   return (
     <>
       <div className="h-screen fixed sm:sticky sm:right-0 sm:w-96 w-screen top-0 flex flex-col p-3 bg-slate-50">
-        <Link
-          href={`/${getQueryParams(router)}`}
-          className="hover:text-violet-600 transition"
+        <div
+          className="hover:text-violet-600 transition cursor-pointer"
+          onClick={() => router.push(`/${getQueryParams(router)}`)}
         >
           Close
-        </Link>
+        </div>
         <div className="grow grid place-items-center">
           {details ? (
             <Product view="details" data={details} />
