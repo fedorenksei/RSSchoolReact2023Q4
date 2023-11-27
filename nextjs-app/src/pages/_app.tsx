@@ -9,7 +9,7 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
 
   return (
     <Provider store={store}>
-      <div className="h-screen bg-blue-50">
+      <div className="h-full min-h-screen bg-blue-50">
         {withSearch ? (
           <div className="flex">
             <div className="grow p-2 space-y-3">
