@@ -1,7 +1,9 @@
-import { HookFormPage } from '@/pages/HookFormPage';
-import { MainPage } from '@/pages/MainPage';
-import { NotFound } from '@/pages/NotFound';
-import { UncontrolledFormPage } from '@/pages/UncontrolledFormPage';
+import {
+  HookFormPage,
+  MainPage,
+  NotFound,
+  UncontrolledFormPage,
+} from '@/pages';
 import { createBrowserRouter } from 'react-router-dom';
 
 export const routerPaths = {

@@ -2,10 +2,9 @@ import { Link } from 'react-router-dom';
 
 export const MainPage = () => {
   return (
-    <div>
-      MainPage
-      <Link to="/hook-form">Hook form</Link>
+    <main className="flex justify-around flex-wrap gap-5">
       <Link to="/uncontrolled-form">Uncontrolled form</Link>
-    </div>
+      <Link to="/hook-form">Hook form</Link>
+    </main>
   );
 };
