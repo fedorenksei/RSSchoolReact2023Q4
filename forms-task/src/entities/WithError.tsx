@@ -11,15 +11,18 @@ export const WithErrors = ({
   return (
     <div>
       {children}
-      <div
-        className={`grid transition-all overflow-hidden ${
-          errors ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'
-        }`}
-      >
-        <div className="min-h-0 text-red-400">
-          {(errors || prevErrors.current)?.map((err) => <p key={err}>{err}</p>)}
+      {(errors || prevErrors.current)?.map((err) => (
+        <div
+          key={err}
+          className={`grid transition-all overflow-hidden ${
+            !(err in prevErrors) ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'
+          }`}
+        >
+          <div className="min-h-0 text-red-400">
+            <p>{err}</p>
+          </div>
         </div>
-      </div>
+      ))}
     </div>
   );
 };
