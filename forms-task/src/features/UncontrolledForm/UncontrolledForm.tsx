@@ -16,11 +16,11 @@ export const UncontrolledForm = () => {
       new FormData((e.target as HTMLFormElement) || undefined)
     );
     try {
-      console.log(data);
       const res = await formSchema.validate(data, {
         strict: true,
         abortEarly: false,
       });
+      setErrors(null);
       console.log(res);
     } catch (err) {
       if (!(err instanceof ValidationError)) return;
