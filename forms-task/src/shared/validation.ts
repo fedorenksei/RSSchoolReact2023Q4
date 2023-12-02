@@ -31,18 +31,23 @@ export const formSchema = object({
     .test('passwords-match', 'Passwords must match', function (value) {
       return this.parent.password === value;
     }),
-  picture: mixed<{ size: number; name: string }>()
+  picture: mixed<{ size: number; name: string }[]>()
     .test(
       'has-size',
-      'Please, upload your picture',
-      (fileObj) => (fileObj?.size || 0) > 0
+      'Not a valid image size, choose a file no bigger than a 1 MB',
+      (fileObj) => {
+        const bits = fileObj?.[0]?.size || 0;
+        return bits > 0 && bits < 1000000;
+      }
     )
-    // .test('has-valid-type', 'Not a valid image type', (fileObj) =>
-    //   ['jpg', 'png'].includes(
-    //     fileObj?.name.toLowerCase().split('.').pop() || ''
-    //   )
-    // )
-
+    .test(
+      'has-valid-type',
+      'Not a valid image type, choose a .jpg or .png file',
+      (fileObj) => {
+        const extension = fileObj?.[0]?.name?.toLowerCase().split('.').pop();
+        return ['jpg', 'png'].includes(extension || '');
+      }
+    )
     .required('Please, upload your picture'),
   country: string().required('Please, select your country'),
   acceptTAndC: string().required('Please, accept our policy to move further'),
