@@ -1,5 +1,5 @@
 import { WithErrors } from '@/entities/WithError';
-import { formLabels } from '@/shared/data/formsFields';
+import { formLabels } from '@/shared/data/formFields';
 import { FormFieldNames } from '@/shared/data/types';
 import { formSchema } from '@/shared/validation';
 import { FormEventHandler, ReactElement, createElement, useState } from 'react';
