@@ -26,7 +26,11 @@ export const formSchema = object({
       /[!?@#$%^&*]/,
       'The password should contain at least one special character from: !?@#$%^&*'
     ),
-  confirmPassword: string().required('Please, confirm the entered password'),
+  confirmPassword: string()
+    .required('Please, confirm the entered password')
+    .test('passwords-match', 'Passwords must match', function (value) {
+      return this.parent.password === value;
+    }),
   picture: mixed<{ size: number }>()
     .test(
       'has-size',
