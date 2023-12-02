@@ -2,7 +2,7 @@ import { WithErrors } from '@/entities/WithError';
 import { formLabels } from '@/shared/data/formsFields';
 import { FormFieldNames } from '@/shared/data/types';
 import { formSchema } from '@/shared/validation';
-import { FormEventHandler, ReactElement, cloneElement, useState } from 'react';
+import { FormEventHandler, ReactElement, createElement, useState } from 'react';
 import { ValidationError } from 'yup';
 
 export const UncontrolledForm = () => {
@@ -92,11 +92,12 @@ export const UncontrolledForm = () => {
       {elements.map(({ name, elem }) => (
         <WithErrors
           key={`uncontrolled-form-input-group-${name}`}
-          errors={errors?.[name]}
+          errors={errors?.[name] || []}
+          fieldName={name}
         >
           <label>
             {formLabels[name]}
-            {cloneElement(elem, { name })}
+            {createElement(elem.type, { ...elem.props, name })}
           </label>
         </WithErrors>
       ))}

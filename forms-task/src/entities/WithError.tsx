@@ -1,28 +1,36 @@
+import { Collapsible } from '@/shared/ui-kit/Collapsible';
 import { PropsWithChildren, useEffect, useRef } from 'react';
 
-export const WithErrors = ({
-  errors,
-  children,
-}: { errors: string[] | undefined } & PropsWithChildren) => {
-  const prevErrors = useRef<string[] | undefined>();
+interface Props extends PropsWithChildren {
+  errors: string[];
+  fieldName: string;
+}
+
+export const WithErrors = ({ errors, children, fieldName }: Props) => {
+  const prevErrors = useRef<string[]>([]);
+
   useEffect(() => {
     prevErrors.current = errors;
+    console.log('useEffect');
   }, [errors]);
+
+  const allErrors = Array.from(new Set(errors.concat(prevErrors.current)));
+
   return (
     <div>
       {children}
-      {(errors || prevErrors.current)?.map((err) => (
-        <div
-          key={err}
-          className={`grid transition-all overflow-hidden ${
-            !(err in prevErrors) ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'
-          }`}
-        >
-          <div className="min-h-0 text-red-400">
-            <p>{err}</p>
-          </div>
-        </div>
-      ))}
+      <div className="text-red-400">
+        <Collapsible isOpen={allErrors.length > 0}>
+          {allErrors.map((err) => (
+            <Collapsible
+              key={`${fieldName}-${err}`}
+              isOpen={errors.includes(err)}
+            >
+              <p>{err}</p>
+            </Collapsible>
+          ))}
+        </Collapsible>
+      </div>
     </div>
   );
 };
