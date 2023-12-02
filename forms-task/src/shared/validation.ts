@@ -31,12 +31,18 @@ export const formSchema = object({
     .test('passwords-match', 'Passwords must match', function (value) {
       return this.parent.password === value;
     }),
-  picture: mixed<{ size: number }>()
+  picture: mixed<{ size: number; name: string }>()
     .test(
       'has-size',
       'Please, upload your picture',
       (fileObj) => (fileObj?.size || 0) > 0
     )
+    .test('has-valid-type', 'Not a valid image type', (fileObj) =>
+      ['jpg', 'png'].includes(
+        fileObj?.name.toLowerCase().split('.').pop() || ''
+      )
+    )
+
     .required('Please, upload your picture'),
   country: string().required('Please, select your country'),
   acceptTAndC: string().required('Please, accept our policy to move further'),

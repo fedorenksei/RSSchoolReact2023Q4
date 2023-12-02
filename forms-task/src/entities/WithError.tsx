@@ -11,7 +11,6 @@ export const WithErrors = ({ errors, children, fieldName }: Props) => {
 
   useEffect(() => {
     prevErrors.current = errors;
-    console.log('useEffect');
   }, [errors]);
 
   const allErrors = Array.from(new Set(errors.concat(prevErrors.current)));
