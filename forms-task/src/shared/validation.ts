@@ -37,11 +37,11 @@ export const formSchema = object({
       'Please, upload your picture',
       (fileObj) => (fileObj?.size || 0) > 0
     )
-    .test('has-valid-type', 'Not a valid image type', (fileObj) =>
-      ['jpg', 'png'].includes(
-        fileObj?.name.toLowerCase().split('.').pop() || ''
-      )
-    )
+    // .test('has-valid-type', 'Not a valid image type', (fileObj) =>
+    //   ['jpg', 'png'].includes(
+    //     fileObj?.name.toLowerCase().split('.').pop() || ''
+    //   )
+    // )
 
     .required('Please, upload your picture'),
   country: string().required('Please, select your country'),
