@@ -20,7 +20,7 @@ export const FormDataTile = ({
       <p>from {country}</p>
       <p>email: {email}</p>
       <p>password: {password}</p>
-      <img src={picture} />
+      <img src={picture} className="max-h-52 max-w-full object-contain" />
       <p>submitted via the {source} form</p>
     </div>
   );
