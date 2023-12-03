@@ -1,5 +1,7 @@
-import { FormFieldNames, Genders } from '@/shared/data/types';
+import { FormFieldNames } from '@/shared/data/types';
 import { ReactElement } from 'react';
+import { GendersSelect } from './GendersSelect';
+import { CountriesSelect } from './CountriesSelect';
 
 export const formInputsList: { name: FormFieldNames; elem: ReactElement }[] = [
   {
@@ -16,16 +18,7 @@ export const formInputsList: { name: FormFieldNames; elem: ReactElement }[] = [
   },
   {
     name: 'gender',
-    elem: (
-      <select>
-        <option value="">-- Select an option --</option>
-        {(Object.keys(Genders) as (keyof typeof Genders)[]).map((key) => (
-          <option key={key} value={key}>
-            {Genders[key]}
-          </option>
-        ))}
-      </select>
-    ),
+    elem: <GendersSelect name="gender" />,
   },
   { name: 'password', elem: <input type="password" name="password" /> },
   {
@@ -34,13 +27,7 @@ export const formInputsList: { name: FormFieldNames; elem: ReactElement }[] = [
   },
   {
     name: 'country',
-    elem: (
-      <select>
-        <option value="">-- Select an option --</option>
-        <option value="Armenia">Armenia</option>
-        <option value="USA">USA</option>
-      </select>
-    ),
+    elem: <CountriesSelect name="country" />,
   },
   { name: 'picture', elem: <input type="file" /> },
   { name: 'acceptTAndC', elem: <input type="checkbox" /> },

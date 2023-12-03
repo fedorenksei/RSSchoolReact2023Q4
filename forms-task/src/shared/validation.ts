@@ -23,6 +23,7 @@ export const formSchema = object({
     .required('Please, enter your age')
     .min(0, "You might be kidding, your age can't be a negative number!"),
   gender: string()
+    .transform((v) => (v === '' ? undefined : v))
     .required('Please, pick an option (or decide not to choose)')
     .oneOf(Object.keys(Genders) as Array<'woman' | 'man' | 'not-responded'>),
   password: string()

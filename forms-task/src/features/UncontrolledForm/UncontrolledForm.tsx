@@ -4,6 +4,7 @@ import { formLabels } from '@/shared/data/formFields';
 import { FormFieldNames } from '@/shared/data/types';
 import { useAppDispatch } from '@/shared/hooks';
 import { setFormData } from '@/shared/store/formDataSlice';
+import { Label } from '@/shared/ui-kit/Label';
 import { toBase64 } from '@/shared/utils';
 import { formSchema } from '@/shared/validation';
 import { FormEventHandler, createElement, useRef, useState } from 'react';
@@ -82,10 +83,10 @@ export const UncontrolledForm = () => {
           errors={errors?.[name] || []}
           fieldName={name}
         >
-          <label>
+          <Label>
             {formLabels[name]}
             {createElement(elem.type, { ...elem.props, name })}
-          </label>
+          </Label>
         </WithErrors>
       ))}
 

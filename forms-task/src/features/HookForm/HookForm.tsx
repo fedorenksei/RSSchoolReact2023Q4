@@ -3,6 +3,7 @@ import { formInputsList } from '@/entities/formInputsList';
 import { formLabels } from '@/shared/data/formFields';
 import { useAppDispatch } from '@/shared/hooks';
 import { setFormData } from '@/shared/store/formDataSlice';
+import { Label } from '@/shared/ui-kit/Label';
 import { toBase64 } from '@/shared/utils';
 import { FormValues, formSchema } from '@/shared/validation';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -25,7 +26,6 @@ export const HookForm = () => {
   });
 
   const onSubmit: SubmitHandler<FormValues> = async (formData) => {
-    console.log('submit');
     const data = {
       ...formData,
       ...{ picture: await toBase64(formData.picture[0]) },
@@ -42,13 +42,21 @@ export const HookForm = () => {
           errors={Object.values(errors?.[name]?.types || {}).flat() as string[]}
           fieldName={name}
         >
-          <label>
+          <Label>
             {formLabels[name]}
-            {createElement(elem.type, {
-              ...elem.props,
-              ...register(name),
-            })}
-          </label>
+            {createElement(
+              elem.type,
+              name === 'country' || name === 'gender'
+                ? {
+                    ...elem.props,
+                    register,
+                  }
+                : {
+                    ...elem.props,
+                    ...register(name),
+                  }
+            )}
+          </Label>
         </WithErrors>
       ))}
 
