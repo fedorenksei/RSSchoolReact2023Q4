@@ -50,12 +50,20 @@ export const formSchema = object({
     .test('passwords-match', 'Passwords must match', function (value) {
       return !value || this.parent.password === value;
     }),
-  picture: mixed<FileList>()
+  picture: mixed<FileList | File[]>()
+    .transform((obj) => {
+      if (obj instanceof File) {
+        return [obj];
+      } else return obj;
+    })
     .test(
       'required',
       'Please, upload your picture',
       (fileList) =>
-        fileList && fileList.length > 0 && fileList[0] instanceof File
+        fileList &&
+        fileList.length > 0 &&
+        fileList[0] instanceof File &&
+        fileList[0].size > 0
     )
     .test(
       'has-size',
@@ -64,7 +72,7 @@ export const formSchema = object({
         if (!fileList || fileList.length === 0) return true;
         const fileObj = fileList[0];
         const bits = fileObj?.size || 0;
-        return bits > 0 && bits < 1000000;
+        return bits === 0 || (bits > 0 && bits < 1000000);
       }
     )
     .test(
@@ -74,7 +82,8 @@ export const formSchema = object({
         if (!fileList || fileList.length === 0) return true;
         const fileObj = fileList[0];
         const extension = fileObj?.name?.toLowerCase().split('.').pop();
-        return ['jpg', 'png'].includes(extension || '');
+        const bits = fileObj?.size || 0;
+        return bits === 0 || ['jpg', 'png'].includes(extension || '');
       }
     )
     .required('Please, upload your picture'),
