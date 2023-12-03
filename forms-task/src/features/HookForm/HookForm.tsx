@@ -1,23 +1,38 @@
 import { WithErrors } from '@/entities/WithError';
 import { formInputsList } from '@/entities/formInputsList';
 import { formLabels } from '@/shared/data/formFields';
-import { formSchema } from '@/shared/validation';
+import { useAppDispatch } from '@/shared/hooks';
+import { setFormData } from '@/shared/store/formDataSlice';
+import { toBase64 } from '@/shared/utils';
+import { FormValues, formSchema } from '@/shared/validation';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { createElement } from 'react';
-import { useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 
 export const HookForm = () => {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm({
     mode: 'onChange',
     resolver: yupResolver(formSchema, { abortEarly: false }),
     criteriaMode: 'all',
   });
 
-  const onSubmit = () => {};
+  const onSubmit: SubmitHandler<FormValues> = async (formData) => {
+    console.log('submit');
+    const data = {
+      ...formData,
+      ...{ picture: await toBase64(formData.picture[0]) },
+    };
+    dispatch(setFormData({ data, source: 'hook' }));
+    navigate('/');
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-3">
@@ -37,7 +52,9 @@ export const HookForm = () => {
         </WithErrors>
       ))}
 
-      <input type="submit" value="Submit" />
+      <button type="submit" disabled={!isValid}>
+        Submit
+      </button>
     </form>
   );
 };

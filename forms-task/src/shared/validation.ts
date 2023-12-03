@@ -1,4 +1,5 @@
-import { boolean, mixed, number, object, string } from 'yup';
+import { InferType, boolean, mixed, number, object, string } from 'yup';
+import { Genders } from './data/types';
 
 export const formSchema = object({
   name: string()
@@ -21,7 +22,9 @@ export const formSchema = object({
     .nullable()
     .required('Please, enter your age')
     .min(0, "You might be kidding, your age can't be a negative number!"),
-  gender: string().required('Please, pick an option (or decide not to choose)'),
+  gender: string()
+    .required('Please, pick an option (or decide not to choose)')
+    .oneOf(Object.keys(Genders) as Array<'woman' | 'man' | 'not-responded'>),
   password: string()
     .required('Please, enter a password')
     .matches(/\d/, {
@@ -79,3 +82,5 @@ export const formSchema = object({
     .transform((v) => !!v)
     .required('Please, accept our policy to move further'),
 });
+
+export type FormValues = InferType<typeof formSchema>;

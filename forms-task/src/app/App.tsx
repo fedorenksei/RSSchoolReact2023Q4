@@ -1,11 +1,15 @@
+import { store } from '@/shared/store/store';
+import { AppLayout } from '@/shared/ui-kit/AppLayout';
+import { Provider } from 'react-redux';
 import { RouterProvider } from 'react-router-dom';
 import { router } from './router';
-import { AppLayout } from '@/shared/ui-kit/AppLayout';
 
 export function App() {
   return (
     <AppLayout>
-      <RouterProvider router={router} />{' '}
+      <Provider store={store}>
+        <RouterProvider router={router} />{' '}
+      </Provider>
     </AppLayout>
   );
 }

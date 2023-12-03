@@ -1,4 +1,4 @@
-import { FormFieldNames } from '@/shared/data/types';
+import { FormFieldNames, Genders } from '@/shared/data/types';
 import { ReactElement } from 'react';
 
 export const formInputsList: { name: FormFieldNames; elem: ReactElement }[] = [
@@ -19,15 +19,9 @@ export const formInputsList: { name: FormFieldNames; elem: ReactElement }[] = [
     elem: (
       <select>
         <option value="">-- Select an option --</option>
-        {[
-          { value: 'woman', text: 'Woman' },
-          { value: 'man', text: 'Man' },
-          { value: 'transgender', text: 'Transgender' },
-          { value: 'non-binary', text: 'Non-binary/non-conforming' },
-          { value: 'not-responded', text: 'Prefer not to respond' },
-        ].map(({ value, text }) => (
-          <option key={value} value={value}>
-            {text}
+        {(Object.keys(Genders) as (keyof typeof Genders)[]).map((key) => (
+          <option key={key} value={key}>
+            {Genders[key]}
           </option>
         ))}
       </select>
