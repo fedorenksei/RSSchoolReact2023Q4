@@ -90,6 +90,7 @@ export const formSchema = object({
   country: string().required('Please, select your country'),
   acceptTAndC: boolean()
     .transform((v) => !!v)
+    .isTrue('Please, accept our policy to move further')
     .required('Please, accept our policy to move further'),
 });
 
