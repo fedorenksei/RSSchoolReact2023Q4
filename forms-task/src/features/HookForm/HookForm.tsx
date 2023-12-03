@@ -13,7 +13,7 @@ export const HookForm = () => {
     formState: { errors },
   } = useForm({
     mode: 'onChange',
-    resolver: yupResolver(formSchema, { strict: true, abortEarly: false }),
+    resolver: yupResolver(formSchema, { abortEarly: false }),
     criteriaMode: 'all',
   });
 

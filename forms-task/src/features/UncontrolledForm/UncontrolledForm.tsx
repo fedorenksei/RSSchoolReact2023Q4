@@ -18,7 +18,6 @@ export const UncontrolledForm = () => {
     );
     try {
       const res = await formSchema.validate(data, {
-        strict: true,
         abortEarly: false,
       });
       setErrors(null);
