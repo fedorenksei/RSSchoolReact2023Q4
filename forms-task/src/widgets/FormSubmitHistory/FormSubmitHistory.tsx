@@ -9,6 +9,12 @@ export const FormSubmitHistory = () => {
       {history.map((record, i) => (
         <FormDataTile key={i} record={record} />
       ))}
+      {history.length === 0 && (
+        <p className="text-center">
+          Please, submit one of the form. Your data will be displayed here after
+          submit
+        </p>
+      )}
     </div>
   );
 };

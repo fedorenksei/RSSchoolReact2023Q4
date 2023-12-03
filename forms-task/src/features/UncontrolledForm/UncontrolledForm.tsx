@@ -5,6 +5,7 @@ import { FormFieldNames } from '@/shared/data/types';
 import { useAppDispatch } from '@/shared/hooks';
 import { setFormData } from '@/shared/store/formDataSlice';
 import { Label } from '@/shared/ui-kit/Label';
+import { Submit } from '@/shared/ui-kit/Submit';
 import { toBase64 } from '@/shared/utils';
 import { formSchema } from '@/shared/validation';
 import { FormEventHandler, createElement, useRef, useState } from 'react';
@@ -90,9 +91,7 @@ export const UncontrolledForm = () => {
         </WithErrors>
       ))}
 
-      <button type="submit" disabled={isSubmitDisabled}>
-        Submit
-      </button>
+      <Submit disabled={isSubmitDisabled} />
     </form>
   );
 };

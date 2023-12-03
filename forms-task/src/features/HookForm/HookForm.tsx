@@ -4,6 +4,7 @@ import { formLabels } from '@/shared/data/formFields';
 import { useAppDispatch } from '@/shared/hooks';
 import { setFormData } from '@/shared/store/formDataSlice';
 import { Label } from '@/shared/ui-kit/Label';
+import { Submit } from '@/shared/ui-kit/Submit';
 import { toBase64 } from '@/shared/utils';
 import { FormValues, formSchema } from '@/shared/validation';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -60,9 +61,7 @@ export const HookForm = () => {
         </WithErrors>
       ))}
 
-      <button type="submit" disabled={!isValid}>
-        Submit
-      </button>
+      <Submit disabled={!isValid} />
     </form>
   );
 };

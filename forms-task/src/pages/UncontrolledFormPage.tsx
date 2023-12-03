@@ -1,10 +1,10 @@
 import { UncontrolledForm } from '@/features';
-import { Link } from 'react-router-dom';
+import { GoToMain } from '@/shared/ui-kit/GoToMain';
 
 export const UncontrolledFormPage = () => {
   return (
     <section className="space-y-3">
-      <Link to="/">Go to the main page</Link>
+      <GoToMain />
       <UncontrolledForm />
     </section>
   );
