@@ -9,7 +9,7 @@ export type FormFieldNames =
   | 'country'
   | 'picture';
 
-type FormDataRedux = {
+export type FormDataRedux = {
   name: string;
   email: string;
   age: number;

@@ -2,12 +2,16 @@ import { FormDataTile } from '@/features';
 import { useAppSelector } from '@/shared/hooks';
 
 export const FormSubmitHistory = () => {
-  const { history } = useAppSelector((state) => state.formData);
+  const { history, newFields } = useAppSelector((state) => state.formData);
 
   return (
     <div className="grid gap-3">
       {history.map((record, i) => (
-        <FormDataTile key={i} record={record} />
+        <FormDataTile
+          key={i}
+          record={record}
+          newFields={i === 0 ? newFields : []}
+        />
       ))}
       {history.length === 0 && (
         <p className="text-center">
